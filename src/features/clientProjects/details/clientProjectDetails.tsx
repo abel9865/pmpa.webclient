@@ -1,14 +1,17 @@
 import React from 'react';
 import { Button, Card, Icon } from 'semantic-ui-react';
-import { ClientProject } from '../../../app/models/clientProject';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { useStore } from '../../../app/stores/store';
 
-interface Props{
-    clientProject:ClientProject;
-    cancelSelectClientProject:()=>void;
-    openForm:(id:string)=>void;
-}
 
-export default function ClientProjectDetails({clientProject, cancelSelectClientProject, openForm}:Props){
+
+export default function ClientProjectDetails(){
+  const{clientProjectStore} = useStore();
+  const{selectedClientProject:clientProject, openForm, cancelSelectedClientProject}= clientProjectStore;
+
+
+if(!clientProject) return <LoadingComponent/>;
+
     return (
         <Card fluid>
             <Icon name='cogs'/>
@@ -25,7 +28,7 @@ export default function ClientProjectDetails({clientProject, cancelSelectClientP
         <Card.Content extra>
           <Button.Group widths='2'>
               <Button onClick={()=>openForm(clientProject.projectId)} basic color='blue' content='Edit'/>
-              <Button onClick={cancelSelectClientProject} basic color='grey' content='Cancel'/>
+              <Button onClick={cancelSelectedClientProject} basic color='grey' content='Cancel'/>
           </Button.Group>
        
         </Card.Content>

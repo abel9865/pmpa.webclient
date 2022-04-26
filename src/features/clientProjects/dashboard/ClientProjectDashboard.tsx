@@ -1,41 +1,31 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
-import { ClientProject } from '../../../app/models/clientProject';
+import { useStore } from '../../../app/stores/store';
 import ClientProjectDetails from '../details/clientProjectDetails';
 import ClientProjectForm from '../form/ClientProjectForm';
 import ClientProjectList from './ClientProjectList';
 
-interface Props{
-    clientProjects: ClientProject[];
-    selectedClientProject: ClientProject |undefined;
-    selectClientProject:(id:string)=>void;
-    cancelSelectClientProject:()=>void;
-    editMode:boolean;
-    openForm:(id:string)=>void;
-    closeForm:()=>void;
-    createOrEdit: (clientProject: ClientProject)=>void;
-    deleteClientProject:(id:string)=>void;
-}
 
-export default function ClientProjectDashboard({clientProjects, selectedClientProject, selectClientProject, cancelSelectClientProject, editMode, openForm, closeForm, createOrEdit, deleteClientProject}:Props){
+
+export default observer(function ClientProjectDashboard(){
+ 
+ const {clientProjectStore} = useStore();
+const{selectedClientProject, editMode} = clientProjectStore;
     return(
         <Grid>
             <Grid.Column width='10'>          
-           <ClientProjectList clientProjects={clientProjects} selectClientProject={selectClientProject} deleteClientProject = {deleteClientProject}/>
+           <ClientProjectList />
             </Grid.Column>
             <Grid.Column width='6'>
                 {selectedClientProject && !editMode &&
                 
-                <ClientProjectDetails 
-                clientProject={selectedClientProject} 
-                cancelSelectClientProject = {cancelSelectClientProject}
-                openForm={openForm}
-                />
+                <ClientProjectDetails   />
                 
                 }
                 {editMode && 
-                <ClientProjectForm closeForm={closeForm} clientProject={selectedClientProject} createOrEdit={createOrEdit} />}
+                <ClientProjectForm />}
             </Grid.Column>
         </Grid>
     )
-}
+})

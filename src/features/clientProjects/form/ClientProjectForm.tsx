@@ -1,38 +1,39 @@
+import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, CheckboxProps, Form, Segment } from 'semantic-ui-react';
 import { ClientProject } from '../../../app/models/clientProject';
+import { useStore } from '../../../app/stores/store';
 
 
 
-interface Props{
-    clientProject: ClientProject|undefined;
- closeForm : ()=>void; 
- createOrEdit:(clientProject:ClientProject)=>void;
-}
 
-export default function ClientProjectForm({clientProject: selectedClientProject, closeForm, createOrEdit}:Props){
+
+export default observer(function ClientProjectForm(){
    
-console.log('here is the obj passed');
-console.log(selectedClientProject);
+const{clientProjectStore}  = useStore();
+const{selectedClientProject, closeForm, createClientProject, updateClientProject, loading} = clientProjectStore;
 
     const initialState = selectedClientProject?? {
         projectId:'',
-        clientId: '',
+        clientId: 'ea8ff81c-a42c-4f7a-8cc3-a842c8f1a10e',
         projectTitle:'',
         projectDescription:'',
         projectStatus: new Boolean(false) ,
-        createdDate: '',
-        lastUpdatedDate:'',
-        createdBy: '',
-        lastUpdatedBy:'',
-        client:undefined,
-        role:undefined
+        createdDate: moment().format(),
+        //lastUpdatedDate:moment().format("DD-MM-YYYY hh:mm:ss"),
+        lastUpdatedDate:moment().format(),
+        createdBy: '0320d8c5-0cbe-4d0b-b0bb-22dd9d774051',
+        lastUpdatedBy:'0320d8c5-0cbe-4d0b-b0bb-22dd9d774051',
+        client:null,
+         role:[]
     }
 
     const[clientProject, setClientProject] = useState(initialState)
    
 function handleSubmit(){
-    createOrEdit(clientProject as ClientProject);
+    
+  clientProject.projectId? updateClientProject(clientProject as ClientProject):createClientProject(clientProject as ClientProject)
 }
 
 function handleToggleChange(event:FormEvent<HTMLInputElement>, data:CheckboxProps){
@@ -64,10 +65,10 @@ setClientProject({...clientProject, [name]: value})
                 <Form.Input placeholder="Title" value={clientProject.projectTitle} name='projectTitle' onChange={handleInputChange}/>
                 <Form.TextArea placeholder="Description" name='projectDescription' value={clientProject.projectDescription} onChange={handleInputChange}/>
                 <Form.Checkbox toggle  label='Status' name='projectStatus' checked={clientProject.projectStatus===true?true: false} onChange={(e, data)=>handleToggleChange(e, data)} />
-               <Button floated='right' positive type='submit' content='Submit' />
+               <Button loading={loading} floated='right' positive type='submit' content='Submit' />
                <Button onClick={closeForm} floated='right' type='button' content='Cancel' />
                
             </Form>
         </Segment>
     )
-}
+})
