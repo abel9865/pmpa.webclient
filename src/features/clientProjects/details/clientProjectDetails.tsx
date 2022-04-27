@@ -1,16 +1,23 @@
-import React from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { Button, Card, Icon } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 
 
 
-export default function ClientProjectDetails(){
+export default observer(function ClientProjectDetails(){
   const{clientProjectStore} = useStore();
-  const{selectedClientProject:clientProject, openForm, cancelSelectedClientProject}= clientProjectStore;
+  const{selectedClientProject:clientProject, loadClientProject, loadingInitial}= clientProjectStore;
+const {id} = useParams<{id:string}>();
+
+useEffect(()=>{
+  if(id) loadClientProject(id);
+}, [id, loadClientProject])
 
 
-if(!clientProject) return <LoadingComponent/>;
+if(loadingInitial || !clientProject) return <LoadingComponent/>;
 
     return (
         <Card fluid>
@@ -27,11 +34,11 @@ if(!clientProject) return <LoadingComponent/>;
         </Card.Content>
         <Card.Content extra>
           <Button.Group widths='2'>
-              <Button onClick={()=>openForm(clientProject.projectId)} basic color='blue' content='Edit'/>
-              <Button onClick={cancelSelectedClientProject} basic color='grey' content='Cancel'/>
+              <Button as ={Link} to ={`/manage/${clientProject.projectId}`} basic color='blue' content='Edit'/>
+              <Button as ={Link} to='/clientProjects' basic color='grey' content='Cancel'/>
           </Button.Group>
        
         </Card.Content>
       </Card>
     )
-}
+})

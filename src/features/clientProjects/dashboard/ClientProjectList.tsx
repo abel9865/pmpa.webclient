@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Item, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 
@@ -40,7 +41,7 @@ export default observer(function ClientProjectList() {
                             <Item.Extra>
                                 <Button
                                     name={clientProject.projectId}
-                                    onClick={() => clientProjectStore.selectClientProject(clientProject.projectId)}
+                                   as ={Link} to={`/clientProjects/${clientProject.projectId}`}
                                     floated='right'
                                     content='View'
                                     color='blue'>

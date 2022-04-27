@@ -1,7 +1,6 @@
-import { action, makeAutoObservable, makeObservable, observable, runInAction } from "mobx";
+import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { ClientProject } from "../models/clientProject";
-import { v4 as uuid } from 'uuid';
 
 export default class ClientProjectStore {
 
@@ -17,21 +16,20 @@ export default class ClientProjectStore {
         makeAutoObservable(this)
     }
 
-get clientProjectsByTitle(){
-    return Array.from(this.clientProjectRegistry.values()).sort((a, b)=>
-    //Date.parse(a.projectTitle[0]) - Date.parse(b.projectTitle[0])
-  a.projectTitle.localeCompare(b.projectTitle)
-    );
-}
+    get clientProjectsByTitle() {
+        return Array.from(this.clientProjectRegistry.values()).sort((a, b) =>
+            //Date.parse(a.projectTitle[0]) - Date.parse(b.projectTitle[0])
+            a.projectTitle.localeCompare(b.projectTitle)
+        );
+    }
 
     loadClientProjects = async () => {
-       // this.setLoadingInitial(true);
+         this.loadingInitial=true;
         try {
             const clientProjects = await agent.ClientProjects.list();
 
             clientProjects.forEach(clientProject => {
-                clientProject.createdDate = clientProject.createdDate.split('T')[0];
-                this.clientProjectRegistry.set(clientProject.projectId, clientProject);
+               this.setClientProject(clientProject);
             })
             this.setLoadingInitial(false);
 
@@ -44,35 +42,52 @@ get clientProjectsByTitle(){
         }
     }
 
+    loadClientProject = async(id:string)=>{
+        let clientProject = this.getClientProject(id);
+        if(clientProject){
+            this.selectedClientProject = clientProject
+            return clientProject;
+        }
+        else{
+            this.loadingInitial = true;
+            try {
+               clientProject = await agent.ClientProjects.details(id) ;
+               this.setClientProject(clientProject);
+               runInAction(()=>{
+                this.selectedClientProject = clientProject;
+               })
+              
+               this.setLoadingInitial(false);
+               return clientProject;
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        }
+    }
+
+    private getClientProject=(id:string)=>{
+return this.clientProjectRegistry.get(id);
+    }
+
+    private setClientProject=(clientProject:ClientProject)=>{
+        clientProject.createdDate = clientProject.createdDate.split('T')[0];
+        this.clientProjectRegistry.set(clientProject.projectId, clientProject);
+    }
+
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }
 
-    selectClientProject = (id: string) => {
-        this.selectedClientProject = this.clientProjectRegistry.get(id);
-        //this.clientProjects.find(x => x.projectId === id);
-    }
+  
 
-    cancelSelectedClientProject = () => {
-        this.selectedClientProject = undefined;
-    }
-
-    openForm=(id?:string)=>{
-        id?this.selectClientProject(id):this.cancelSelectedClientProject();
-        this.editMode = true;
-    }
-
-    closeForm=()=>{
-        this.editMode=false;
-    }
-
-    createClientProject = async(clientProject:ClientProject)=>{
+    createClientProject = async (clientProject: ClientProject) => {
         this.loading = true;
-        clientProject.projectId = uuid();
+       // clientProject.projectId = uuid();
         try {
             await agent.ClientProjects.create(clientProject);
-            runInAction(()=>{
-                this.clientProjectRegistry.set(clientProject.clientId, clientProject);
+            runInAction(() => {
+                this.clientProjectRegistry.set(clientProject.projectId, clientProject);
                 // this.clientProjects.push(clientProject);
                 this.selectedClientProject = clientProject;
                 this.editMode = false;
@@ -80,46 +95,45 @@ get clientProjectsByTitle(){
             })
         } catch (error) {
             console.log(error);
-            runInAction(()=>{
+            runInAction(() => {
                 this.loading = false;
             })
         }
     }
 
-    updateClientProject = async(clientProject:ClientProject)=>{
-        this.loading=true;
+    updateClientProject = async (clientProject: ClientProject) => {
+        this.loading = true;
         try {
             await agent.ClientProjects.update(clientProject);
-            runInAction(()=>{
+            runInAction(() => {
                 //this.clientProjects = [...this.clientProjects.filter(x=>x.projectId!==clientProject.projectId), clientProject];
-                
+
                 this.clientProjectRegistry.set(clientProject.projectId, clientProject);
-               
+
                 this.selectedClientProject = clientProject;
                 this.editMode = false;
                 this.loading = false;
             })
         } catch (error) {
             console.log(error);
-            runInAction(()=>{
+            runInAction(() => {
                 this.loading = false;
             })
         }
     }
 
-    deleteClientProject= async(id:string)=>{
+    deleteClientProject = async (id: string) => {
         this.loading = true;
         try {
-           await agent.ClientProjects.delete(id);
-           runInAction(()=>{
-              // this.clientProjects = [...this.clientProjects.filter(x=>x.projectId!==id)];
-              this.clientProjectRegistry.delete(id);
-              if(this.selectedClientProject?.projectId===id) this.cancelSelectedClientProject();
-               this.loading = false;
-           })
+            await agent.ClientProjects.delete(id);
+            runInAction(() => {
+                // this.clientProjects = [...this.clientProjects.filter(x=>x.projectId!==id)];
+                this.clientProjectRegistry.delete(id);
+                this.loading = false;
+            })
         } catch (error) {
             console.log(error);
-            runInAction(()=>{
+            runInAction(() => {
                 this.loading = false;
             })
         }

@@ -11,7 +11,7 @@
         lastUpdatedBy: string;
         lastUpdatedDate: string;
         client?: any;
-        role: any[];
+        role?: any[];
     }
 
 
