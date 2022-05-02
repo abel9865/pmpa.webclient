@@ -10,11 +10,18 @@ export default class ClientProjectStore {
     editMode = false;
     loading = false;
     loadingInitial = true;
+collapsed=false;
+
 
     constructor() {
 
         makeAutoObservable(this)
     }
+
+searchClientProjects=(searchValue:string)=>{
+    const searchResult =  Array.from(this.clientProjectRegistry.values()).filter(x=>x.projectTitle.toLowerCase().includes(searchValue.toLowerCase()))
+return searchResult;
+}
 
     get clientProjectsByTitle() {
         return Array.from(this.clientProjectRegistry.values()).sort((a, b) =>

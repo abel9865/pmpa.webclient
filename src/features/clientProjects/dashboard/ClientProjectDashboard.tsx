@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
+
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
-import ClientProjectDetails from '../details/clientProjectDetails';
+import ClientProjectFilters from './ClientProjectFilters';
 
-import ClientProjectForm from '../form/ClientProjectForm';
 import ClientProjectList from './ClientProjectList';
 
 
@@ -25,13 +25,15 @@ if (clientProjectStore.loadingInitial) return <LoadingComponent content='Loading
 
 
     return(
+       
         <Grid>
             <Grid.Column width='10'>          
            <ClientProjectList />
             </Grid.Column>
             <Grid.Column width='6'>
-              <h1>Filter</h1>
+             <ClientProjectFilters/>
             </Grid.Column>
         </Grid>
+       
     )
 })

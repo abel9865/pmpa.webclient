@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import  { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { Button, CheckboxProps, Form, Segment } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
@@ -11,10 +11,11 @@ import { v4 as uuid } from 'uuid';
 
 
 
+
 export default observer(function ClientProjectForm() {
     const history = useHistory();
     const { clientProjectStore } = useStore();
-    const { selectedClientProject, createClientProject, updateClientProject, loading, loadClientProject, loadingInitial } = clientProjectStore;
+    const {  createClientProject, updateClientProject, loading, loadClientProject, loadingInitial } = clientProjectStore;
     const { id } = useParams<{ id: string }>();
 
 
@@ -97,6 +98,8 @@ console.log(clientProject.projectId.length);
     }
     if (loadingInitial) return <LoadingComponent content='Loading...' />
     return (
+
+       
         <Segment clearing>
             <Form onSubmit={handleSubmit} autoComplete='off'>
                 <Form.Input placeholder="Title" value={clientProject.projectTitle} name='projectTitle' onChange={handleInputChange} />
@@ -107,5 +110,7 @@ console.log(clientProject.projectId.length);
 
             </Form>
         </Segment>
+
+       
     )
 })
