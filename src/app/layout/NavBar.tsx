@@ -26,6 +26,8 @@ export default function NavBar(){
 
     <Menu.Item as= {NavLink} to='/connections' name='Data Connections'/> 
 
+    <Menu.Item as= {NavLink} to='/errors' name='Errors'/> 
+
  
     <Menu.Item>
         
