@@ -1,5 +1,7 @@
+import { format } from 'date-fns';
 import { observer } from 'mobx-react-lite';
 import React from 'react'
+import { Link } from 'react-router-dom';
 import {Button, Header, Item, Segment, Image} from 'semantic-ui-react'
 import { ClientProject } from '../../../../app/models/clientProject';
 
@@ -34,7 +36,7 @@ export default observer (function ClientProjectDetailedHeader({clientProject}: P
                                     content={clientProject.projectTitle}
                                     style={{color: 'white'}}
                                 />
-                                <p>{clientProject.createdDate}</p>
+                                <p>{format(clientProject.createdDate!, 'MMM dd yyyy')}</p>
                                 <p>
                                     Hosted by <strong>Bob</strong>
                                 </p>
@@ -46,7 +48,7 @@ export default observer (function ClientProjectDetailedHeader({clientProject}: P
             <Segment clearing attached='bottom'>
                 <Button color='teal'>Join Activity</Button>
                 <Button>Cancel attendance</Button>
-                <Button color='orange' floated='right'>
+                <Button as ={Link} to={`/manage/${clientProject.projectId}`} color='orange' floated='right'>
                     Manage Event
                 </Button>
             </Segment>

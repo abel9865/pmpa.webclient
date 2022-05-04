@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { ClientProject } from "../models/clientProject";
@@ -9,7 +10,7 @@ export default class ClientProjectStore {
     selectedClientProject: ClientProject | undefined = undefined;
     editMode = false;
     loading = false;
-    loadingInitial = true;
+    loadingInitial = false;
 collapsed=false;
 
 
@@ -29,6 +30,16 @@ return searchResult;
             a.projectTitle.localeCompare(b.projectTitle)
         );
     }
+
+    // get groupedClientProjectsByDate(){
+    //     return Object.entries(
+    //         this.clientProjectsByTitle.reduce((clientProjects, clientProject)=>{
+    //             const date = format(clientProject.createdDate!, 'dd MMM yyyy');
+    //             clientProjects[date] = clientProjects[date]? [...clientProjects[date], clientProject]:[clientProject];
+    //             return clientProjects;
+    //         }, {} as {[Key:string]:ClientProject[]})
+    //     )
+    // }
 
     loadClientProjects = async () => {
          this.loadingInitial=true;
@@ -78,7 +89,8 @@ return this.clientProjectRegistry.get(id);
     }
 
     private setClientProject=(clientProject:ClientProject)=>{
-        clientProject.createdDate = clientProject.createdDate.split('T')[0];
+        clientProject.createdDate = new Date(clientProject.createdDate!);
+        //clientProject.createdDate.split('T')[0];
         this.clientProjectRegistry.set(clientProject.projectId, clientProject);
     }
 

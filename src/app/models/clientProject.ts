@@ -7,7 +7,7 @@
         projectDescription: string;
         projectStatus: boolean;
         createdBy: string;
-        createdDate: string;
+        createdDate: Date | null;
         lastUpdatedBy: string;
         lastUpdatedDate: string;
         client?: any;

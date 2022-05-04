@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Icon, Item, Segment } from 'semantic-ui-react'
@@ -29,7 +30,7 @@ export default function ClientProjectListItem({ clientProject }: Props) {
 
             <Segment>
                 <span>
-                    <Icon name='clock' />{clientProject.createdDate}
+                    <Icon name='clock' />{format(clientProject.createdDate!, 'MMM dd yyyy h:mm aa')}
                     <Icon name='marker' />{clientProject.projectStatus ? 'Active' : 'Inactive'}
                 </span>
             </Segment>
