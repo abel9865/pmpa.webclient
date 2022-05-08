@@ -6,7 +6,7 @@ export default function ClientProjectFilters(){
     return (
 <>
 
-<Menu vertical size = 'large' style={{width:'100%'}}>
+<Menu vertical size = 'large' style={{width:'100%', marginTop:'50px'}}>
 <Header icon='filter' attached color='teal' content='Filter' />
 <Menu.Item content = 'All Solutions' />
 <Menu.Item content = ""/>

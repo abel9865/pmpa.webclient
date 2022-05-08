@@ -21,7 +21,7 @@ import MyDateInput from '../../../app/common/form/MyDateInput';
 
 export default observer(function ClientProjectForm() {
     const history = useHistory();
-    const { clientProjectStore } = useStore();
+    const { clientProjectStore, modalStore } = useStore();
     const { createClientProject, updateClientProject, loading, loadClientProject, loadingInitial } = clientProjectStore;
     const { id } = useParams<{ id: string }>();
 
@@ -60,10 +60,18 @@ export default observer(function ClientProjectForm() {
                 ...clientProject,
                 projectId: uuid()
             }
-            createClientProject(newClientProject as ClientProject).then(() => history.push(`/clientProjects/${newClientProject.projectId}`))
+            createClientProject(newClientProject as ClientProject).then(() => {
+                history.push(`/clientProjects/${newClientProject.projectId}`);
+                modalStore.closeModal();
+            }
+            )
         }
         else {
-            updateClientProject(clientProject as ClientProject).then(() => history.push(`/clientProjects/${clientProject.projectId}`))
+            updateClientProject(clientProject as ClientProject).then(() => {
+                history.push(`/clientProjects/${clientProject.projectId}`);
+                modalStore.closeModal();
+            }
+            )
         }
     }
 
@@ -102,10 +110,24 @@ export default observer(function ClientProjectForm() {
                             <Header content='Other Client Project Details' sub color='teal' />
 
                             <MyDateInput placeholderText='Date' name='createdDate' showTimeSelect timeCaption='time' />
-                            <Button
-                                disabled={isSubmitting || !dirty || !isValid}
-                                loading={loading} floated='right' positive type='submit' content='Submit' />
-                            <Button as={Link} to='/clientProjects' floated='right' type='button' content='Cancel' />
+                            {modalStore.modal.open ? (
+                                <>
+                                    <Button
+                                        disabled={isSubmitting || !dirty || !isValid}
+                                        loading={loading} floated='right' positive type='submit' content='Submit' />
+                                    <Button onClick={() => (modalStore.closeModal())} floated='right' type='button' content='Cancel' />
+
+                                </>
+                            ) :
+                                (<>
+                                    <Button
+                                        disabled={isSubmitting || !dirty || !isValid}
+                                        loading={loading} floated='right' positive type='submit' content='Submit' />
+                                    <Button as={Link} to='/clientProjects' floated='right' type='button' content='Cancel' />
+
+                                </>)
+                            }
+
 
                         </Form>
 

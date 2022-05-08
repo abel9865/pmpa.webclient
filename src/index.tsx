@@ -10,6 +10,14 @@ import reportWebVitals from './reportWebVitals';
 import { store, StoreContext } from './app/stores/store';
 import { BrowserRouter, Router } from 'react-router-dom';
 import {createBrowserHistory} from 'history';
+// import "../node_modules/@syncfusion/ej2-grids/styles/tailwind.css";
+import { registerLicense } from '@syncfusion/ej2-base';
+
+
+
+
+// Registering Syncfusion license key
+registerLicense('ORg4AjUWIQA/Gnt2VVhhQlFaclhJW3xPYVF2R2FJflx6dlFMZVxBNQtUQF1hS35WdkJiWXxXc31XQmZc');
 
 export const history = createBrowserHistory();
 

@@ -1,20 +1,23 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Button, Container, Menu } from 'semantic-ui-react';
+import { Link, NavLink } from 'react-router-dom';
+import { Button, Container, Dropdown, Image, Menu } from 'semantic-ui-react';
+import { useStore } from '../stores/store';
 
 
 
-export default function NavBar(){
+export default observer(function NavBar(){
 
+    const{userStore:{user, logout}}=useStore();
 
     return (
        
-       <Container>
+      
       
 
 
  <Menu inverted fixed="top" >
-
+ <Container>
      <Menu.Item as ={NavLink} to ='/' exact header>
         <img src="/assets/logo.png" alt="logo" style={{marginRight:'10px'}}></img>
         MergencePro
@@ -28,17 +31,34 @@ export default function NavBar(){
 
     <Menu.Item as= {NavLink} to='/errors' name='Errors'/> 
 
+    <Menu.Item as= {NavLink} to='/security' name='User Management'/> 
+
+ 
  
     <Menu.Item>
         
-<Button as={NavLink}  to = '/createClientProject' positive content = 'Create New Solution'/>
-        </Menu.Item> 
+{/* <Button as={NavLink}  to = '/createClientProject' positive content = 'Create New Solution'/> */}
+        </Menu.Item>  
 
+
+<Menu.Item position='right'>
+   
+<Image src={user?.image || '/assets/user.png'}  avatar spaced='right' />
+<Dropdown pointing='top left' text={user?.email}>
+    <Dropdown.Menu>
+    <Dropdown.Item as ={Link} to={`/profile/${user?.email}`} text='My Profile' icon='user' />
+
+<Dropdown.Item onClick={logout} text='Logout' icon='power'/>
+    </Dropdown.Menu>
+
+</Dropdown>
+</Menu.Item>
+        </Container>
          </Menu> 
     
-        </Container>
+      
 
 
       
     )
-}
+})

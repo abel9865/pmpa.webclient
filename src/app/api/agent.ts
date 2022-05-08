@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { history } from '../..';
 
 import { ClientProject } from '../models/clientProject';
+import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
 
 
@@ -14,9 +15,15 @@ const sleep = (delay: number) => {
 
 axios.defaults.baseURL = 'http://localhost:5000';
 
+axios.interceptors.request.use(config=>{
+    const token = store.commonStore.token;
+    if(token) config.headers!.Authorization=`Bearer ${token}`
+    return config;
+})
+
 axios.interceptors.response.use(async response => {
 
-    await sleep(1000);
+   // await sleep(1000);
     return response;
 
 }, (error: AxiosError) => {
@@ -75,8 +82,15 @@ const ClientProjects = {
 
 }
 
+const Account={
+    current:()=> requests.get<User>('/account'),
+    login:(user:UserFormValues)=>requests.post<User>('/account/login', user),
+    addUser:(user:UserFormValues)=>requests.post<User>('/account/adduser', user)
+}
+
 const agent = {
-    ClientProjects
+    ClientProjects,
+    Account
 }
 
 export default agent;
