@@ -1,5 +1,4 @@
-import React from 'react';
-import dataSource from './DataSource.json';
+import React, { useEffect } from 'react';
 
 
 
@@ -15,8 +14,29 @@ import {
     Sort,
     Group
   } from '@syncfusion/ej2-react-grids';
-import { Button, Icon, Segment } from 'semantic-ui-react';
-export default function UserList(){
+import { Button, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../../app/stores/store';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+
+
+
+
+
+export default observer(function UserList(){
+
+
+    const {userStore} = useStore();
+
+    const{getAllUsers, registeredUserRegistry} = userStore;
+
+
+    useEffect(() => {
+        if (registeredUserRegistry.size<=1) getAllUsers();
+      }, [registeredUserRegistry.size, getAllUsers])
+      
+      if (userStore.loadingInitial) return <LoadingComponent content='Loading users' />
 
     // const data = [
     //     { OrderID: 0, CustomerName: 'Example', CustomerAddress:'123 main street' },
@@ -55,7 +75,7 @@ export default function UserList(){
                     </GridComponent> */}
 
                   
-                    <Button icon positive labelPosition='left' style={{marginBottom:'15px'}} spaced='right'>
+                    <Button as={Link} to='addUser' icon positive labelPosition='left' style={{marginBottom:'15px'}} spaced='right'>
       <Icon name='add' />
       Add User
     </Button>
@@ -63,14 +83,14 @@ export default function UserList(){
 
 
    
-                    <GridComponent dataSource={dataSource} allowSorting={true}  allowFiltering={true}  allowPaging={true} pageSettings={{ pageSize: 6 }} allowGrouping={true}>
+                    <GridComponent dataSource={Array.from(registeredUserRegistry.values())} allowSorting={true}  allowFiltering={true}  allowPaging={true} pageSettings={{ pageSize: 6 }} allowGrouping={true}>
                     
                     <ColumnsDirective>
-          <ColumnDirective field='OrderID' headerText='Invoice ID' textAlign='Right' width='100' />
-          <ColumnDirective field='CustomerID' headerText='Customer ID' width='150' />
-          <ColumnDirective field='ShipCountry' headerText='Ship Country' />
-          <ColumnDirective field='ShipName' headerText='Ship Name' />
-          <ColumnDirective field='Freight' textAlign='Right' format='C2' width='100' />
+          <ColumnDirective field='firstName' headerText='First Name' textAlign='Right' width='100' />
+          <ColumnDirective field='lastName' headerText='Last Name' width='150' />
+          <ColumnDirective field='email' headerText='Email Address' />
+          <ColumnDirective field='isAdmin' headerText='Admin Access' />
+         
         </ColumnsDirective>
         <Inject services={[Page, Filter, Sort, Group]} />
                     
@@ -79,4 +99,4 @@ export default function UserList(){
                      
    </>
     )
-}
+})

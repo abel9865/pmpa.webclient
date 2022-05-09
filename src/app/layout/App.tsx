@@ -21,6 +21,9 @@ import { useStore } from "../stores/store";
 import LoadingComponent from "./LoadingComponent";
 import NavBar from "./NavBar";
 import Security from "../../features/security/Security";
+import Layout from "./Layout";
+import TopMenu from "./TopMenu";
+import SideBar from "./SideBar";
 
 function App() {
 
@@ -49,7 +52,51 @@ if(!commonStore.appLoaded) return <LoadingComponent content="Loadin app..." />
         path={'/(.+)'}
         render={() => (
           <>
-            <NavBar />
+         
+
+         <div className="grid">
+        <div className="menu">
+            <TopMenu/>
+        </div>
+        <div className="main-content">
+          <div className='parent' style={{ height: '100vh'}}>
+              <div className='side' style={{ height: '100vh'}}>
+<SideBar/>
+              </div>
+              <div className='content' >
+
+
+              <Switch>
+                <Route exact path='/clientProjects' component={ClientProjectDashboard} />
+                <Route path='/clientProjects/:id' component={clientProjectDetails} />
+                <Route key={location.key} path={['/createClientProject', '/manage/:id']} component={ClientProjectForm} />
+                <Route path='/errors' component={TestErrors} />
+                <Route path='/server-error' component={ServerError} />
+                <Route path='/login' component={LoginForm} />
+
+                
+                
+                <Route exact path='/security' component={Security} />
+                <Route exact path='/users' component={UserList} />
+                <Route key={location.key} path={['/addUser', '/manageUser/:id']} component={UserForm} />
+
+                <Route exact path='/roles' component={RoleList} />
+                <Route key={location.key} path={['/addRole', '/manageRole/:id']} component={RoleForm} />
+
+
+                <Route component={NotFound} />
+              </Switch>
+
+              </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+            {/* <NavBar />
             <Container style={{ marginTop: '7em' }}>
               <Switch>
                 <Route exact path='/clientProjects' component={ClientProjectDashboard} />
@@ -71,7 +118,7 @@ if(!commonStore.appLoaded) return <LoadingComponent content="Loadin app..." />
 
                 <Route component={NotFound} />
               </Switch>
-            </Container>
+            </Container> */}
 
           </>
         )}

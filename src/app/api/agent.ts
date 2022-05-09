@@ -43,6 +43,7 @@ axios.interceptors.response.use(async response => {
                 for (const key in data.errors) {
                     if (data.errors[key]) {
                         modalStateErrors.push(data.errors[key]);
+                      
                     }
                 }
                 throw modalStateErrors.flat();
@@ -83,6 +84,7 @@ const ClientProjects = {
 }
 
 const Account={
+    list:()=> requests.get<UserFormValues[]>('/account/getallusers'),
     current:()=> requests.get<User>('/account'),
     login:(user:UserFormValues)=>requests.post<User>('/account/login', user),
     addUser:(user:UserFormValues)=>requests.post<User>('/account/adduser', user)

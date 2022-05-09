@@ -1,8 +1,9 @@
 export interface User {
+    userId:string;
     firstName: string;
     lastName: string;
     email: string;
-    cientId: string;
+    clientId: string;
     token: string;
     image?: string;
 }
@@ -13,20 +14,23 @@ export interface UserFormValues {
     password: string;
 
 
-    firtName?: string;
+    firstName?: string;
     lastName?: string;  
     address?: string;
     city?: string;
     state?: string;
     zipCode?: string;
     country?: string;
+    phoneNumber?:string;
     isAdmin?: boolean;
     active?: boolean;
-    profileImage?: string
+    profileImage?: string |null
     profilePath?: string
     sysTimeZone?: string
     sysTimeOffset?: string
-    adminUserId?: string
+    clientSideChangeBy?: string
     clientId?: string
+    userId?:string
+    // error?:string
 
 }

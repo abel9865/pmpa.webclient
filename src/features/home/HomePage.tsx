@@ -19,8 +19,8 @@ const {userStore, modalStore} = useStore();
               </Header>
               {userStore.isLoggedIn ?(
                   <>
-                  <Header as ='h2' inverted content='Welcome to MergencePro' />
-                  <Button as={Link} to ='/clientProjects' size='huge' inverted >
+                  <Header as ='h2' inverted content='Manage and automate your processes' />
+                  <Button as={Link} to ='/clientProjects' size='huge' inverted  style={{marginTop:'20px'}}>
 Take me to my solutions!
     </Button>
                   </>

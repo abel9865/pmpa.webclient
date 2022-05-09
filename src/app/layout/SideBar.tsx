@@ -24,24 +24,19 @@ export default function SideBar() {
 
 
     return (
-        <Menu vertical>
-            <Menu.Item as ={NavLink} to ='/' exact header>
-        <img src="/assets/logo.png" alt="logo"></img>
-        MergencePro
-        </Menu.Item>
+        <Menu vertical style={{height:'100%'}}>
+        
         <Menu.Item>
           <Menu.Header>Products</Menu.Header>
 
           <Menu.Menu>
             <Menu.Item
               name='enterprise'
-              active={activeItem === 'enterprise'}
-              onClick={handleItemClick}
+              as= {NavLink} to='/enterprise' 
             />
             <Menu.Item
               name='consumer'
-              active={activeItem === 'consumer'}
-              onClick={handleItemClick}
+              as= {NavLink} to='/consumer' 
             />
           </Menu.Menu>
         </Menu.Item>
@@ -52,18 +47,15 @@ export default function SideBar() {
           <Menu.Menu>
             <Menu.Item
               name='rails'
-              active={activeItem === 'rails'}
-              onClick={handleItemClick}
+              as= {NavLink} to='/rails' 
             />
             <Menu.Item
               name='python'
-              active={activeItem === 'python'}
-              onClick={handleItemClick}
+              as= {NavLink} to='/python' 
             />
             <Menu.Item
               name='php'
-              active={activeItem === 'php'}
-              onClick={handleItemClick}
+              as= {NavLink} to='/php' 
             />
           </Menu.Menu>
         </Menu.Item>
@@ -74,13 +66,11 @@ export default function SideBar() {
           <Menu.Menu>
             <Menu.Item
               name='shared'
-              active={activeItem === 'shared'}
-              onClick={handleItemClick}
+              as= {NavLink} to='/shared' 
             />
             <Menu.Item
               name='dedicated'
-              active={activeItem === 'dedicated'}
-              onClick={handleItemClick}
+              as= {NavLink} to='/dedicated' 
             />
           </Menu.Menu>
         </Menu.Item>
@@ -91,16 +81,14 @@ export default function SideBar() {
           <Menu.Menu>
             <Menu.Item
               name='email'
-              active={activeItem === 'email'}
-              onClick={handleItemClick}
+              as= {NavLink} to='/email' 
             >
               E-mail Support
             </Menu.Item>
 
             <Menu.Item
               name='faq'
-              active={activeItem === 'faq'}
-              onClick={handleItemClick}
+              as= {NavLink} to='/faq' 
             >
               FAQs
             </Menu.Item>

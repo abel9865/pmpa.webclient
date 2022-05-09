@@ -1,12 +1,13 @@
 import React from 'react';
-import { Tab } from 'semantic-ui-react';
+import { Header, Tab } from 'semantic-ui-react';
 import RoleList from './roles/RoleList';
 import UserList from './users/UserList';
 
 export default function Security(){
 
     return(
-        
+        <>
+         <Header as='h1' content='Access Management' />
        <Tab panes={
         [
             { menuItem: 'Users', render: () => <Tab.Pane><UserList /></Tab.Pane> },
@@ -16,5 +17,7 @@ export default function Security(){
        } >
           
        </Tab>
+
+       </>
     )
 }

@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import  { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Button, Grid } from 'semantic-ui-react';
+import { Button, Container, Grid, Segment } from 'semantic-ui-react';
 
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
@@ -28,6 +28,8 @@ if (clientProjectStore.loadingInitial) return <LoadingComponent content='Loading
 
     return(
        
+        < >
+
         <Grid>
             <Grid.Column width='10'>  
             <Button onClick={() => (modalStore.openModal(<ClientProjectForm />, "large"))} positive content = 'Create New Solution'/>        
@@ -37,6 +39,8 @@ if (clientProjectStore.loadingInitial) return <LoadingComponent content='Loading
              <ClientProjectFilters/>
             </Grid.Column>
         </Grid>
+
+        </>
        
     )
 })
