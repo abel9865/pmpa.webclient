@@ -20,7 +20,7 @@ export default function NavMenu(){
 
     return (
      
-        <Menu vertical>
+        <Menu vertical style={{marginLeft:'200px'}}>
         <Menu.Item
           name='inbox'
           active={activeItem === 'inbox'}

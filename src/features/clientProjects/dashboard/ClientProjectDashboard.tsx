@@ -28,7 +28,7 @@ if (clientProjectStore.loadingInitial) return <LoadingComponent content='Loading
 
     return(
        
-        < >
+        <div className='pmpacomp' >
 
         <Grid>
             <Grid.Column width='10'>  
@@ -40,7 +40,7 @@ if (clientProjectStore.loadingInitial) return <LoadingComponent content='Loading
             </Grid.Column>
         </Grid>
 
-        </>
+        </div>
        
     )
 })

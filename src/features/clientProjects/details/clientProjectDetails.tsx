@@ -27,7 +27,7 @@ if(loadingInitial || !clientProject) return <LoadingComponent/>;
     return (
      
 
-
+<div className='pmpacomp'>
 <Grid>
 <Grid.Column width={10}>
   <ClientProjectDetailedHeader clientProject={clientProject} />
@@ -40,6 +40,6 @@ if(loadingInitial || !clientProject) return <LoadingComponent/>;
 <ClientProjectDetailedSideBar />
 </Grid.Column>
 </Grid>
-     
+</div> 
     )
 })

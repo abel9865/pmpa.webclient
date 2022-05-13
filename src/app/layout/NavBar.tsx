@@ -31,7 +31,7 @@ export default observer(function NavBar(){
 
     <Menu.Item as= {NavLink} to='/errors' name='Errors'/> 
 
-    <Menu.Item as= {NavLink} to='/security' name='User Management'/> 
+   
 
  
  

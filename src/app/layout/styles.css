@@ -1,29 +1,50 @@
-@import url('https://cdn.syncfusion.com/ej2/material.css');
+@import url('https://cdn.syncfusion.com/ej2/tailwind.css');
+@import url('https://cdn.syncfusion.com/ej2/20.1.52/ej2-base/styles/tailwind.css');
 
-/* @import "../node_modules/@syncfusion/ej2-grids/styles/tailwind.css"; */
+@import "../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css";
+@import "../../../node_modules/@syncfusion/ej2-react-navigations/styles/tailwind.css";
 
-/* 
-@import '../node_modules/@syncfusion/ej2-base/styles/material.css';     */
-/* @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';   */
-/* @import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';  
-@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';  
-@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';  
-@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css'; */
-/* @import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css"; */
+@import "../../../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css";
+
+
+
+
 
 
 body{
   background-color: #EAEAEA !important;
 }
 
+.pmpacomp{
+margin-left:25px;
+margin-top: 20px;;
+width: '100vh';
+height: '100vh';
+}
+
+
+/* SIDEBAR STYLING _ BEGIN */
+
+.ui.vertical.menu .item>.header:not(.ui){
+  font-size: 1.1rem !important;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif !important;
+}
+
+.ui.vertical.menu .menu .item{
+  font-size: 0.95rem !important;
+}
+
+/* SIDEBAR STYLING _ END */
+
 .ui.inverted.top.fixed.menu{
   background-image: linear-gradient(135deg, rgb(24,42,115) 0%, rgb(33, 138, 174) 69%, rgb(32, 167, 172) 89%) !important;
+
 }
 
 .ui.inverted.menu{
   background-image: linear-gradient(135deg, rgb(24,42,115) 0%, rgb(33, 138, 174) 69%, rgb(32, 167, 172) 89%) !important;
+
+
 }
 
 .react-calendar{

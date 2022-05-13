@@ -21,11 +21,15 @@ export default observer(function TopMenu(){
        
            <Menu.Item as= {NavLink} to='/workFlows' name='WorkFlows'/>
        
-           <Menu.Item as= {NavLink} to='/connections' name='Data Connections'/> 
+           <Menu.Item as= {NavLink} to='/connections' name='Data Connectors'/> 
+
+           <Menu.Item as= {NavLink} to='/security' name='User Management'/> 
        
-           <Menu.Item as= {NavLink} to='/errors' name='Errors'/> 
+           <Menu.Item as= {NavLink} to='/errors' name='Err'/> 
+
+           <Menu.Item as= {NavLink} to='/settings' name='settings'/> 
        
-           <Menu.Item as= {NavLink} to='/security' name='Access Management'/> 
+         
        
         
         

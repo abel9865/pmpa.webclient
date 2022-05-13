@@ -24,7 +24,7 @@ export interface UserFormValues {
     phoneNumber?:string;
     isAdmin?: boolean;
     active?: boolean;
-    profileImage?: string |null
+    profileImage?: string
     profilePath?: string
     sysTimeZone?: string
     sysTimeOffset?: string
@@ -32,5 +32,6 @@ export interface UserFormValues {
     clientId?: string
     userId?:string
     // error?:string
+    //error?:string |null
 
 }

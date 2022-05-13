@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Container } from "semantic-ui-react";
@@ -24,6 +24,12 @@ import Security from "../../features/security/Security";
 import Layout from "./Layout";
 import TopMenu from "./TopMenu";
 import SideBar from "./SideBar";
+import { SidebarComponent, SidebarType } from '@syncfusion/ej2-react-navigations';
+import SideBarAccordion from './SiceBarAccordion';
+
+
+
+
 
 function App() {
 
@@ -48,22 +54,23 @@ if(!commonStore.appLoaded) return <LoadingComponent content="Loadin app..." />
       <ModalContainer/>
 
       <Route exact path='/' component={HomePage} />
+     
       <Route
         path={'/(.+)'}
         render={() => (
           <>
          
 
-         <div className="grid">
-        <div className="menu">
+         <div className="grid-layout">
+        <div className="menu-layout">
             <TopMenu/>
         </div>
-        <div className="main-content">
-          <div className='parent' style={{ height: '100vh'}}>
-              <div className='side' style={{ height: '100vh'}}>
+        <div className="main-content-layout">
+          <div className='parent-layout' style={{ height: '100vh'}}>
+              <div className='side-layout' style={{ height: '100vh'}}>
 <SideBar/>
               </div>
-              <div className='content' >
+              <div className='content-layout' >
 
 
               <Switch>
@@ -105,17 +112,13 @@ if(!commonStore.appLoaded) return <LoadingComponent content="Loadin app..." />
                 <Route path='/errors' component={TestErrors} />
                 <Route path='/server-error' component={ServerError} />
                 <Route path='/login' component={LoginForm} />
-
                 
                 
                 <Route exact path='/security' component={Security} />
                 <Route exact path='/users' component={UserList} />
                 <Route key={location.key} path={['/addUser', '/manageUser/:id']} component={UserForm} />
-
                 <Route exact path='/roles' component={RoleList} />
                 <Route key={location.key} path={['/addRole', '/manageRole/:id']} component={RoleForm} />
-
-
                 <Route component={NotFound} />
               </Switch>
             </Container> */}
@@ -126,5 +129,7 @@ if(!commonStore.appLoaded) return <LoadingComponent content="Loadin app..." />
     </>
   );
 }
+
+
 
 export default observer(App);

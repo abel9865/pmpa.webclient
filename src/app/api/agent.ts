@@ -85,9 +85,13 @@ const ClientProjects = {
 
 const Account={
     list:()=> requests.get<UserFormValues[]>('/account/getallusers'),
+    getRegisteredUser:(id:string)=>requests.get<UserFormValues>(`/account/getregistereduser/${id}`),
     current:()=> requests.get<User>('/account'),
     login:(user:UserFormValues)=>requests.post<User>('/account/login', user),
-    addUser:(user:UserFormValues)=>requests.post<User>('/account/adduser', user)
+    addUser:(user:UserFormValues)=>requests.post<User>('/account/adduser', user),
+
+    updateUser: (user: UserFormValues) => axios.put<void>(`/account/edituser/${user.userId}`, user),
+    deleteUser: (id: string) => axios.delete<void>(`/account/${id}`),
 }
 
 const agent = {

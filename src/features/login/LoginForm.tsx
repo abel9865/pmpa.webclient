@@ -16,14 +16,14 @@ export default observer(function LoginForm() {
             {({ handleSubmit, isSubmitting, errors }) => (
 
                 <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                    <Header as ='h2' content = 'Login to MergencePro' color='teal' textAlign='center' />
+                    <Header as ='h2' content = 'Login to MergencePro' color='blue' textAlign='center' />
                     <MyTextInput name='email' placeholder='Email' />
                     <MyTextInput name='password' placeholder='Password' type='password' />
                     <ErrorMessage
                         name='error' render={() =>
                             <Label style={{ marginBottom: 10 }} basic color='red' content={errors.error} />}
                     />
-                    <Button loading={isSubmitting} positive content='Login' type='submit' fluid />
+                    <Button loading={isSubmitting} color='blue' content='Login' type='submit' fluid />
 
                 </Form>
             )}
