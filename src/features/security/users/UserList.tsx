@@ -22,6 +22,8 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { history } from '../../..';
+import DeleteUser from './DeleteUser';
+import modalStore from '../../../app/stores/modalStore';
 
 
 
@@ -37,7 +39,7 @@ L10n.load({
 export default observer(function UserList(){
 
 
-    const {userStore} = useStore();
+    const {modalStore, userStore} = useStore();
 
     const{getRegisteredUsers, registeredUserRegistry} = userStore;
 
@@ -109,7 +111,7 @@ export default observer(function UserList(){
         <>
       
          <Icon name='edit' link={true}  size='small' color='blue' onClick={() => (handleEditClick(props.userId))} style={{marginRight:'30px'}}/>
-         <Icon name='delete' link size='small' color='blue' onClick={() => (handleDeleteClick(props.userId))}/>
+         <Icon name='delete' link size='small' color='blue' onClick={() => (modalStore.openModal(<DeleteUser userId={props.userId} />, "mini"))}/>
          
         </>
       )
@@ -141,6 +143,9 @@ export default observer(function UserList(){
       console.log(userId);
       history.push(`/manageUser/${userId}`)
     }
+
+
+console.log(Array.from(registeredUserRegistry.values()));
 
     return(
         <div >

@@ -1,3 +1,5 @@
+import { Role } from "./role";
+
 export interface User {
     userId:string;
     firstName: string;
@@ -30,7 +32,8 @@ export interface UserFormValues {
     sysTimeOffset?: string
     clientSideChangeBy?: string
     clientId?: string
-    userId?:string
+    userId?:string,
+    roles?:Role[]
     // error?:string
     //error?:string |null
 

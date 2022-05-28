@@ -4,6 +4,7 @@ import { history } from '../..';
 
 import { ClientProject } from '../models/clientProject';
 import { User, UserFormValues } from '../models/user';
+import { Role } from '../models/role';
 import { store } from '../stores/store';
 
 
@@ -77,6 +78,7 @@ const requests = {
 const ClientProjects = {
     list: () => requests.get<ClientProject[]>('/ClientProject/GetAllClientProjects'),
     details: (id: string) => requests.get<ClientProject>(`/ClientProject/GetClientProjectByProjectId/${id}`),
+    getClientProjectsByClientId: (id: string) => requests.get<ClientProject[]>(`/ClientProject/GetClientProjectsByClientId/${id}`),
     create: (clientProject: ClientProject) => axios.post<void>('/ClientProject', clientProject),
     update: (clientProject: ClientProject) => axios.put<void>(`/ClientProject/${clientProject.projectId}`, clientProject),
     delete: (id: string) => axios.delete<void>(`/ClientProject/${id}`)
@@ -94,9 +96,23 @@ const Account={
     deleteUser: (id: string) => axios.delete<void>(`/account/${id}`),
 }
 
+
+const RoleApi={
+    list:()=> requests.get<Role[]>('/role/getallroles'),
+    details:(id:string)=>requests.get<Role>(`/role/getrolesbyroleid/${id}`),
+getRolesByProjectId: (id:string)=>requests.get<Role[]>(`/role/getrolesbyprojectid/${id}`),
+getRolesByClientId: (id:string)=>requests.get<Role[]>(`/role/getrolesbyclientid/${id}`),
+    create:(role:Role)=>requests.post<Role>('/role', role),
+
+    update: (role: Role) => axios.put<void>(`/role/${role.roleId}`, role),
+    delete: (id: string) => axios.delete<void>(`/role/${id}`),
+}
+
+
 const agent = {
     ClientProjects,
-    Account
+    Account,
+    RoleApi
 }
 
 export default agent;

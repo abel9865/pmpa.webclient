@@ -121,6 +121,13 @@ export default function SideBar() {
             Dashboard Builder
           </Menu.Item>
 
+
+ <Menu.Item
+            name='usermanagement'
+            as= {NavLink} to='/security' 
+          >
+            User Management
+          </Menu.Item>
          
 
           <Menu.Item
@@ -130,12 +137,7 @@ export default function SideBar() {
             Import/Export
           </Menu.Item>
 
-          <Menu.Item
-            name='theme'
-            as= {NavLink} to='/theme' 
-          >
-            Theme
-          </Menu.Item>
+          
 
           <Menu.Item
             name='chat'
@@ -144,12 +146,7 @@ export default function SideBar() {
             Chat
           </Menu.Item>
 
-          <Menu.Item
-            name='settings'
-            as= {NavLink} to='/settings' 
-          >
-            Settings
-          </Menu.Item>
+        
           
         </Menu.Menu>
       </Menu.Item>

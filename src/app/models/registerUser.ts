@@ -1,3 +1,5 @@
+import { Role } from "./role";
+
 export interface RegisterUser {
     firtName: string;
     lastName: string;
@@ -17,4 +19,5 @@ export interface RegisterUser {
     clientSideChangeBy: string;
     userId: string | null;
     clientId: string;
+    roles?:Role[]
 }

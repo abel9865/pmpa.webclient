@@ -1,0 +1,5 @@
+
+.e-scroller.e-autohide .e-vscrollbar, .e-scroller.e-autohide .e-vscroll {
+    position: absolute !important;
+    right: 0 !important;
+}

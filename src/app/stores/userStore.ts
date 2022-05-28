@@ -34,11 +34,20 @@ export default class UserStore {
         try {
             const user = await agent.Account.login(creds);
 
+            //set localStorage values for token, clientId, and userId
             store.commonStore.setToken(user.token);
+            window.localStorage.setItem('cid', user.clientId);
+            window.localStorage.setItem('pid', user.userId);
+
+
             runInAction(() => this.user = user);
 
             history.push('/clientProjects')
             store.modalStore.closeModal();
+
+
+
+
 
         } catch (error) {
             throw error;
@@ -47,10 +56,19 @@ export default class UserStore {
     }
 
     logout = () => {
-        store.commonStore.setToken(null);
-        window.localStorage.removeItem('jwt');
+        this.clearLocalStorage()
         this.user = null;
         history.push('/');
+    }
+
+
+    clearLocalStorage = () => {
+        store.commonStore.setToken(null);
+        window.localStorage.removeItem('jwt');
+        window.localStorage.removeItem('cid');
+
+        window.localStorage.removeItem('pid');
+
     }
 
     getUser = async () => {
@@ -67,7 +85,7 @@ export default class UserStore {
     // User Management functions
 
     addUser = async (creds: UserFormValues) => {
-  
+
         this.loading = true;
         // clientProject.projectId = uuid();
         try {
@@ -77,9 +95,11 @@ export default class UserStore {
                 ...creds,
                 userId: uuid()
             }
-  
+
+            console.log(creds);
+
             const user = await agent.Account.addUser(newUser);
-           
+
             //update object with userId coming back from server
             creds.userId = user.userId;
             runInAction(() => {
@@ -88,8 +108,8 @@ export default class UserStore {
                 this.selectedUser = creds;
                 this.editMode = false;
                 this.loading = false;
-               
-                history.push('/security')
+
+                history.push('/security', { from: 'user' })
             })
 
             // store.commonStore.setToken(user.token);
@@ -107,9 +127,13 @@ export default class UserStore {
 
 
     updateUser = async (creds: UserFormValues) => {
-        
+
         this.loading = true;
         try {
+
+            console.log(history.location);
+            
+
             await agent.Account.updateUser(creds);
             runInAction(() => {
 
@@ -118,7 +142,7 @@ export default class UserStore {
                 this.selectedUser = creds;
                 this.editMode = false;
                 this.loading = false;
-                history.push('/security')
+                history.push('/security', { from: 'user' })
             })
         } catch (error) {
             runInAction(() => {
@@ -135,6 +159,9 @@ export default class UserStore {
                 // this.clientProjects = [...this.clientProjects.filter(x=>x.projectId!==id)];
                 this.registeredUserRegistry.delete(id);
                 this.loading = false;
+                history.push('/security', { from: 'user' })
+                store.modalStore.closeModal();
+
             })
         } catch (error) {
 
@@ -153,6 +180,8 @@ export default class UserStore {
                 this.setUser(user);
             })
             this.setLoadingInitial(false);
+
+            console.log(Array.from(this.registeredUserRegistry.values()))
 
 
         } catch (error) {
@@ -178,9 +207,7 @@ export default class UserStore {
         let registeredUser = this.getRegisteredUserFromCache(id);
         if (registeredUser) {
             this.selectedUser = registeredUser;
-
-            console.log(registeredUser);
-
+console.log(registeredUser);
             return registeredUser;
         }
         else {
@@ -205,6 +232,9 @@ export default class UserStore {
     }
 
     getRegisteredUserFromCache = (id: string) => {
+
+        // console.log('id to search ; ' + id);
+        // console.log(Array.from(this.registeredUserRegistry.values()));
         return this.registeredUserRegistry.get(id);
     }
 

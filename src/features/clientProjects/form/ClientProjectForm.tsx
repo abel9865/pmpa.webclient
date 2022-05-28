@@ -21,23 +21,24 @@ import MyDateInput from '../../../app/common/form/MyDateInput';
 
 export default observer(function ClientProjectForm() {
     const history = useHistory();
-    const { clientProjectStore, modalStore } = useStore();
+    const { clientProjectStore, userStore, modalStore } = useStore();
     const { createClientProject, updateClientProject, loading, loadClientProject, loadingInitial } = clientProjectStore;
+   const{user} = userStore;
     const { id } = useParams<{ id: string }>();
 
 
 
     const [clientProject, setClientProject] = useState<ClientProject>({
         projectId: '',
-        clientId: 'ea8ff81c-a42c-4f7a-8cc3-a842c8f1a10e',
+        clientId: user?.clientId,
         projectTitle: '',
         projectDescription: '',
         projectStatus: new Boolean(false),
-        createdDate: null,
+        createdDate: new Date(moment().format()),
         //lastUpdatedDate:moment().format("DD-MM-YYYY hh:mm:ss"),
         lastUpdatedDate: moment().format(),
-        createdBy: '0320d8c5-0cbe-4d0b-b0bb-22dd9d774051',
-        lastUpdatedBy: '0320d8c5-0cbe-4d0b-b0bb-22dd9d774051',
+        createdBy: user?.userId,
+        lastUpdatedBy: '',
         client: null,
         role: new Array()
     } as ClientProject);
@@ -45,8 +46,8 @@ export default observer(function ClientProjectForm() {
     const validationSchema = Yup.object({
         projectTitle: Yup.string().required('The title is required'),
         projectDescription: Yup.string().required('The description is required'),
-        projectStatus: Yup.string().required('The status is required'),
-        createdDate: Yup.string().required('Date is required').nullable()
+        projectStatus: Yup.string().required('The status is required')
+       // createdDate: Yup.string().required('Date is required').nullable()
     })
 
     useEffect(() => {
@@ -107,9 +108,9 @@ export default observer(function ClientProjectForm() {
                             <Checkbox toggle label='Status' name='projectStatus' checked={clientProject.projectStatus === true ? true : false} onChange={(e, data) => handleToggleChange(e, data)} />
                             {/* <MySelectInput options={categoryOptions} placeholder='Category' name ='category' /> */}
                             {/* <MyToggleInput id='projectStatus' checked={clientProject.projectStatus} label='Status' name='projectStatus' />  */}
-                            <Header content='Other Client Project Details' sub color='teal' />
+                            {/* <Header content='Other Client Project Details' sub color='teal' />
 
-                            <MyDateInput placeholderText='Date' name='createdDate' showTimeSelect timeCaption='time' />
+                            <MyDateInput placeholderText='Date' name='createdDate' showTimeSelect timeCaption='time' /> */}
                             {modalStore.modal.open ? (
                                 <>
                                     <Button

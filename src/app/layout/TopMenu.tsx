@@ -23,7 +23,7 @@ export default observer(function TopMenu(){
        
            <Menu.Item as= {NavLink} to='/connections' name='Data Connectors'/> 
 
-           <Menu.Item as= {NavLink} to='/security' name='User Management'/> 
+          
        
            <Menu.Item as= {NavLink} to='/errors' name='Err'/> 
 
@@ -32,11 +32,6 @@ export default observer(function TopMenu(){
          
        
         
-        
-           <Menu.Item>
-               
-       {/* <Button as={NavLink}  to = '/createClientProject' positive content = 'Create New Solution'/> */}
-               </Menu.Item>  
        
        
        <Menu.Item position='right'>
@@ -44,7 +39,7 @@ export default observer(function TopMenu(){
        <Image src={user?.image || '/assets/user.png'}  avatar spaced='right' />
        <Dropdown pointing='top left' text={user?.email}>
            <Dropdown.Menu>
-           <Dropdown.Item as ={Link} to={`/profile/${user?.email}`} text='My Profile' icon='user' />
+           <Dropdown.Item as ={Link} to={`/manageUser/${user?.userId}`} text='My Profile' icon='user' />
        
        <Dropdown.Item onClick={logout} text='Logout' icon='power'/>
            </Dropdown.Menu>

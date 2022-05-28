@@ -13,13 +13,16 @@ import ClientProjectDetailedSideBar from './tempStuff/clientProjectDetailedSideB
 
 
 export default observer(function ClientProjectDetails(){
-  const{clientProjectStore} = useStore();
+  const{clientProjectStore, commonStore} = useStore();
   const{selectedClientProject:clientProject, loadClientProject, loadingInitial}= clientProjectStore;
+  const{setSideBarDisplay}= commonStore;
 const {id} = useParams<{id:string}>();
 
 useEffect(()=>{
+  //display sidebar nav
+  setSideBarDisplay(true);
   if(id) loadClientProject(id);
-}, [id, loadClientProject])
+}, [id, loadClientProject, setSideBarDisplay])
 
 
 if(loadingInitial || !clientProject) return <LoadingComponent/>;

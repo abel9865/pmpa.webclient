@@ -33,8 +33,8 @@ export default function TestErrors() {
     }
 
     return (
-        <>
-            <Header as='h1' content='Test Error component' />
+        <div className='pmpacomp'>
+            <Header as='h2' content='Test Error component' />
             <Segment>
                 <Button.Group widths='7'>
                     <Button onClick={handleNotFound} content='Not Found' basic primary />
@@ -48,7 +48,7 @@ export default function TestErrors() {
             {errors &&
             <ValidationErrors errors={errors} />
             }
-        </>
+        </div>
     )
 }
 

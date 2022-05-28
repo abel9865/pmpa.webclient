@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import {  makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { ClientProject } from "../models/clientProject";
 
@@ -11,7 +11,7 @@ export default class ClientProjectStore {
     editMode = false;
     loading = false;
     loadingInitial = false;
-collapsed=false;
+    collapsed = false;
 
 
     constructor() {
@@ -19,10 +19,10 @@ collapsed=false;
         makeAutoObservable(this)
     }
 
-searchClientProjects=(searchValue:string)=>{
-    const searchResult =  Array.from(this.clientProjectRegistry.values()).filter(x=>x.projectTitle.toLowerCase().includes(searchValue.toLowerCase()))
-return searchResult;
-}
+    searchClientProjects = (searchValue: string) => {
+        const searchResult = Array.from(this.clientProjectRegistry.values()).filter(x => x.projectTitle.toLowerCase().includes(searchValue.toLowerCase()))
+        return searchResult;
+    }
 
     get clientProjectsByTitle() {
         return Array.from(this.clientProjectRegistry.values()).sort((a, b) =>
@@ -41,13 +41,13 @@ return searchResult;
     //     )
     // }
 
-    loadClientProjects = async () => {
-         this.loadingInitial=true;
+    loadClientProjects = async (clientId: string) => {
+        this.loadingInitial = true;
         try {
-            const clientProjects = await agent.ClientProjects.list();
+            const clientProjects = await agent.ClientProjects.getClientProjectsByClientId(clientId);
 
             clientProjects.forEach(clientProject => {
-               this.setClientProject(clientProject);
+                this.setClientProject(clientProject);
             })
             this.setLoadingInitial(false);
 
@@ -60,23 +60,36 @@ return searchResult;
         }
     }
 
-    loadClientProject = async(id:string)=>{
+    loadClientProject = async (id: string) => {
+
+        //clear previous projectId from localStorage
+        window.localStorage.removeItem('pjid');
+
         let clientProject = this.getClientProject(id);
-        if(clientProject){
-            this.selectedClientProject = clientProject
+        if (clientProject) {
+            this.selectedClientProject = clientProject;
+            
+            //set projectId in localStorage
+            window.localStorage.setItem('pjid', clientProject.projectId);
+
             return clientProject;
         }
-        else{
+        else {
             this.loadingInitial = true;
             try {
-               clientProject = await agent.ClientProjects.details(id) ;
-               this.setClientProject(clientProject);
-               runInAction(()=>{
-                this.selectedClientProject = clientProject;
-               })
-              
-               this.setLoadingInitial(false);
-               return clientProject;
+                clientProject = await agent.ClientProjects.details(id);
+
+                this.setClientProject(clientProject);
+                
+                //set projectId in localStorage
+                window.localStorage.setItem('pjid', clientProject.projectId);
+
+                runInAction(() => {
+                    this.selectedClientProject = clientProject;
+                })
+
+                this.setLoadingInitial(false);
+                return clientProject;
             } catch (error) {
                 console.log(error);
                 this.setLoadingInitial(false);
@@ -84,25 +97,33 @@ return searchResult;
         }
     }
 
-    private getClientProject=(id:string)=>{
-return this.clientProjectRegistry.get(id);
+    private getClientProject = (id: string) => {
+        return this.clientProjectRegistry.get(id);
     }
 
-    private setClientProject=(clientProject:ClientProject)=>{
+    private setClientProject = (clientProject: ClientProject) => {
+
+
         clientProject.createdDate = new Date(clientProject.createdDate!);
+
+
         //clientProject.createdDate.split('T')[0];
         this.clientProjectRegistry.set(clientProject.projectId, clientProject);
+    }
+
+    private dateIsValid = (date: Date) => {
+        return !Number.isNaN(new Date(date).getTime());
     }
 
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }
 
-  
+
 
     createClientProject = async (clientProject: ClientProject) => {
         this.loading = true;
-       // clientProject.projectId = uuid();
+        // clientProject.projectId = uuid();
         try {
             await agent.ClientProjects.create(clientProject);
             runInAction(() => {

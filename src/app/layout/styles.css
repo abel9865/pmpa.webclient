@@ -1,15 +1,35 @@
-@import url('https://cdn.syncfusion.com/ej2/tailwind.css');
-@import url('https://cdn.syncfusion.com/ej2/20.1.52/ej2-base/styles/tailwind.css');
 
-@import "../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css";
+@import url('https://cdn.syncfusion.com/ej2/styles/compatibility/tailwind.css');
+@import url('https://cdn.boldreports.com/4.1.78/content/bold.widgets.core.compatibility.min.css');
+@import url('https://cdn.boldreports.com/4.1.78/content/material/bold.theme.compatibility.min.css');
+
+/* @import url('https://cdn.syncfusion.com/ej2/tailwind.css');
+@import url('https://cdn.syncfusion.com/ej2/20.1.52/ej2-base/styles/tailwind.css'); */
+
+/* @import "../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css"; */
 @import "../../../node_modules/@syncfusion/ej2-react-navigations/styles/tailwind.css";
 
-@import "../../../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css";
+/* @import "../../../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css";
+
+
+@import "../../../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css"; */
+@import "../../../node_modules/@syncfusion/ej2-react-dropdowns/styles/tailwind.css";
 
 
 
+@import '../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css';  
+@import '../../../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';  
+@import '../../../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';  
+@import '../../../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';  
+@import '../../../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css';  
+@import '../../../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
+@import '../../../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
+@import '../../../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
+@import "../../../node_modules/@syncfusion/ej2-react-grids/styles/tailwind.css";
 
+@import "../../../node_modules/@syncfusion/ej2-react-lists/styles/tailwind.css";
 
+@import "../../../node_modules/@syncfusion/ej2-react-layouts/styles/tailwind.css";
 
 body{
   background-color: #EAEAEA !important;
@@ -17,10 +37,33 @@ body{
 
 .pmpacomp{
 margin-left:25px;
+margin-right:10px;
 margin-top: 20px;;
 width: '100vh';
 height: '100vh';
 }
+
+.modalButtons{
+  margin-bottom: 40px !important;
+}
+/* MultiSelect Syncfusion - BEGIN */
+
+.control-pane #multisection.control-section, .control-section #custom-filtering {
+  width: 80%;
+  margin: 0 auto;
+  min-width: 185px;
+}
+.e-bigger .control-pane #multisection.control-section,
+.e-bigger .control-section #custom-filtering {
+  width: 100%;
+}
+
+.e-dropdownbase{
+  border: 0px solid rgba(34,36,38,.15) !important;
+}
+
+/* MultiSelect Syncfusion - END */
+
 
 
 /* SIDEBAR STYLING _ BEGIN */
@@ -37,14 +80,16 @@ height: '100vh';
 /* SIDEBAR STYLING _ END */
 
 .ui.inverted.top.fixed.menu{
+  /* background-color: #2daad3 !important; */
   background-image: linear-gradient(135deg, rgb(24,42,115) 0%, rgb(33, 138, 174) 69%, rgb(32, 167, 172) 89%) !important;
-
+  
 }
 
 .ui.inverted.menu{
+  /* background-color: #2daad3 !important; */
   background-image: linear-gradient(135deg, rgb(24,42,115) 0%, rgb(33, 138, 174) 69%, rgb(32, 167, 172) 89%) !important;
-
-
+  
+   
 }
 
 .react-calendar{
