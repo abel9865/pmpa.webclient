@@ -4,8 +4,13 @@ import React, { useEffect } from 'react';
 //Report designer source
 import '@boldreports/javascript-reporting-controls/Scripts/bold.report-designer.min';
 import '@boldreports/javascript-reporting-controls/Scripts/bold.report-viewer.min';
-import '@boldreports/javascript-reporting-controls/Content/office-365/bold.reports.all.min.css';
-import '@boldreports/javascript-reporting-controls/Content/office-365/bold.reportdesigner.min.css';
+// import '@boldreports/javascript-reporting-controls/Content/office-365/bold.reports.all.min.css';
+// import '@boldreports/javascript-reporting-controls/Content/office-365/bold.reportdesigner.min.css';
+
+import '@boldreports/javascript-reporting-controls/Content/office-365/bold.reports.all.compatibility.min.css';
+import '@boldreports/javascript-reporting-controls/Content/office-365/bold.reportdesigner.compatibility.min.css';
+
+
 //Data-Visualization
 import '@boldreports/javascript-reporting-controls/Scripts/data-visualization/ej.bulletgraph.min';
 import '@boldreports/javascript-reporting-controls/Scripts/data-visualization/ej.chart.min';
@@ -89,9 +94,9 @@ export default function ReportBuilder({messages}:Props){
         <div id ='rptContainer' style={designerStyle} >
         <BoldReportDesignerComponent
         id="reportdesigner_container"
-         serviceUrl={'https://demos.boldreports.com/services/api/ReportDesignerWebApi'}
+         //serviceUrl={'https://demos.boldreports.com/services/api/ReportDesignerWebApi'}
 
-        //serviceUrl = {'https://localhost:5003/ReportingAPI'}
+        serviceUrl = {'https://localhost:5003/ReportingAPI'}
         filterDataConnectors={['SQL', 'WebAPI', 'Excel', 'MariaDB', 'MySQL']}
 
         // serviceAuthorizationToken={`Bearer ${window.localStorage.getItem('jwt')}`}

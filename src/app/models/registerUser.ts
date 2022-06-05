@@ -12,10 +12,10 @@ export interface RegisterUser {
     country: string;
     isAdmin: boolean;
     active: boolean;
-    profileImage: string;
-    profilePath: string;
-    sysTimeZone: string;
-    sysTimeOffset: string;
+    imageId: string;
+   imagePath: string;
+    //sysTimeZone: string;
+    //sysTimeOffset: string;
     clientSideChangeBy: string;
     userId: string | null;
     clientId: string;

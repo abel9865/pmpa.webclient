@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Header, Tab, TabProps } from 'semantic-ui-react';
 import { history } from '../..';
+import ResourceHeader from '../../app/common/chat/ResourceHeader';
 import { useStore } from '../../app/stores/store';
 import RoleList from './roles/RoleList';
 import UserList from './users/UserList';
@@ -66,7 +67,8 @@ setActiveIndex(data.activeIndex! as number);
 
     return(
         <div className='pmpacomp' >
-         <Header as='h2' content='Access Management' />
+         {/* <Header as='h2' content='Access Management' /> */}
+         <ResourceHeader headerText='Access Management'/>
        <Tab panes={
         [
             { menuItem: 'Users', render: () => <Tab.Pane><UserList /></Tab.Pane> },

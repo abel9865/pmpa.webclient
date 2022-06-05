@@ -1,0 +1,1 @@
+declare module '@elsa-workflows/elsa-workflow-designer';

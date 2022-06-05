@@ -5,6 +5,7 @@ import agent from "../api/agent";
 import { User, UserFormValues } from "../models/user";
 import { store } from "./store";
 import { v4 as uuid } from 'uuid';
+import { PasswordRequestObj } from "../models/passwordRequestObj";
 
 
 export default class UserStore {
@@ -59,6 +60,17 @@ export default class UserStore {
         this.clearLocalStorage()
         this.user = null;
         history.push('/');
+    }
+
+    sendPasswordResetEmail = async (values: any) => {
+        try {
+            console.log(values);
+            var passwordRequestObj: PasswordRequestObj = { email: values.email, url: window.location.href };
+            var opResult = await agent.Account.ResetPassword(passwordRequestObj);
+            //store.modalStore.closeModal();
+        } catch (error) {
+
+        }
     }
 
 
@@ -132,7 +144,7 @@ export default class UserStore {
         try {
 
             console.log(history.location);
-            
+
 
             await agent.Account.updateUser(creds);
             runInAction(() => {
@@ -195,9 +207,9 @@ export default class UserStore {
     private setUser = (user: UserFormValues) => {
         if (user.password === undefined || user.password === null) { user.password = '' }
 
-        if (user.profileImage === undefined || user.profileImage === null) { user.profileImage = '' }
+        if (user.imageId === undefined || user.imageId === null) { user.imageId = '' }
 
-        if (user.profilePath === undefined || user.profilePath === null) { user.profilePath = '' }
+        if (user.imagePath === undefined || user.imagePath === null) { user.imagePath = '' }
         //clientProject.createdDate = new Date(clientProject.createdDate!);
         //clientProject.createdDate.split('T')[0];
         this.registeredUserRegistry.set(user.userId!, user);
@@ -207,7 +219,7 @@ export default class UserStore {
         let registeredUser = this.getRegisteredUserFromCache(id);
         if (registeredUser) {
             this.selectedUser = registeredUser;
-console.log(registeredUser);
+            console.log(registeredUser);
             return registeredUser;
         }
         else {

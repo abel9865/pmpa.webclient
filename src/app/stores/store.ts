@@ -1,8 +1,10 @@
 import { createContext, useContext } from "react";
 import ClientProjectStore from "./clientProjectStore";
+import CommentStore from "./commentStore";
 import CommonStore from "./commonStore";
 import LayoutStore from "./LayoutStore";
 import ModalStore from "./modalStore";
+import ProfileStore from "./profileStore";
 import RoleStore from "./roleStore";
 import ThemeStore from "./themeStore";
 import UserStore from "./userStore";
@@ -14,7 +16,9 @@ interface Store{
     roleStore:RoleStore,
     modalStore: ModalStore,
     layoutStore: LayoutStore,
-    themeStore: ThemeStore
+    themeStore: ThemeStore,
+    profileStore: ProfileStore,
+    commentStore:CommentStore
 }
 
 export const store:Store={
@@ -24,7 +28,9 @@ export const store:Store={
     roleStore : new RoleStore(),
     modalStore: new ModalStore(),
     layoutStore: new LayoutStore(),
-    themeStore: new ThemeStore()
+    themeStore: new ThemeStore(),
+    profileStore: new ProfileStore(),
+    commentStore : new CommentStore()
 }
 
 export const StoreContext = createContext(store);

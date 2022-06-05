@@ -16,10 +16,12 @@
 .main-content-layout {
     grid-area: maincontent;
     background-color: #f9fafb;
+    overflow: hidden;
 }
 
 .parent-layout {
     display: inline-flex;
+    overflow: hidden;
 }
 
 .side-layout {
@@ -28,6 +30,7 @@
     overflow: hidden;
     /* padding-top: var(--top-menu-height); */
     z-index: 99;
+    overflow: hidden;
 }
 
 .small-side {
@@ -41,6 +44,7 @@
     transition: all 0.3s;
     padding: 10px;
     width: calc(100% - 14em);
+    overflow: hidden;
 }
 
 /* .small-content {

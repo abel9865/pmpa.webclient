@@ -6,6 +6,8 @@ import { ClientProject } from '../models/clientProject';
 import { User, UserFormValues } from '../models/user';
 import { Role } from '../models/role';
 import { store } from '../stores/store';
+import { Photo } from '../models/photo';
+import { PasswordRequestObj } from '../models/passwordRequestObj';
 
 
 const sleep = (delay: number) => {
@@ -90,6 +92,7 @@ const Account={
     getRegisteredUser:(id:string)=>requests.get<UserFormValues>(`/account/getregistereduser/${id}`),
     current:()=> requests.get<User>('/account'),
     login:(user:UserFormValues)=>requests.post<User>('/account/login', user),
+    ResetPassword:(obj:PasswordRequestObj)=>requests.post<void>('/account/ResetPassword', obj),
     addUser:(user:UserFormValues)=>requests.post<User>('/account/adduser', user),
 
     updateUser: (user: UserFormValues) => axios.put<void>(`/account/edituser/${user.userId}`, user),
@@ -108,11 +111,22 @@ getRolesByClientId: (id:string)=>requests.get<Role[]>(`/role/getrolesbyclientid/
     delete: (id: string) => axios.delete<void>(`/role/${id}`),
 }
 
+const Profiles={
+    uploadPhoto:(file:Blob)=>{
+        let formData = new FormData;
+        formData.append('File', file);
+        return axios.post<Photo>('photos', formData, {
+            headers:{'Content-type':'multipart/form-data'}
+        })
+    }
+}
+
 
 const agent = {
     ClientProjects,
     Account,
-    RoleApi
+    RoleApi,
+    Profiles
 }
 
 export default agent;

@@ -14,6 +14,10 @@ import { v4 as uuid } from 'uuid';
 //import * as roleData from './TestRoleDataSource.json';
 import { history } from '../../..';
 import { Role } from '../../../app/models/role';
+import UserHeader from './UserHeader';
+
+
+
 
 
 export default observer(function UserForm() {
@@ -44,6 +48,8 @@ export default observer(function UserForm() {
         country: '',
         phoneNumber: '',
 
+        imageId: '',
+    imagePath: '',
         // isAdmin: false,
         // active: true,
         // profileImage: '',
@@ -241,6 +247,7 @@ setSideBarDisplay(true);
 
 
         <div className='pmpacomp'>
+            <UserHeader firstName={registeredUser.firstName || ''} lastName= {registeredUser.lastName ||''} photoUrl={registeredUser.imagePath||''}></UserHeader>
             {/* userStore.addUser(values.registeredUser) */}
             <Segment clearing>
 
@@ -259,6 +266,9 @@ setSideBarDisplay(true);
                         zipCode: registeredUser.zipCode || '',
                         country: registeredUser.country || '',
                         phoneNumber: registeredUser.phoneNumber || '',
+
+                        imageId: registeredUser.imageId|| '',
+                        imagePath: registeredUser.imagePath ||'',
 
                         // isAdmin: registeredUser.isAdmin,
                         // active: registeredUser.active,

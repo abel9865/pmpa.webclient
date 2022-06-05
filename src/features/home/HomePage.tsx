@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Header, Segment, Image, Button } from 'semantic-ui-react';
 import { useStore } from '../../app/stores/store';
+import ForgotPassword from '../login/ForgotPassword';
 import LoginForm from '../login/LoginForm';
 
 export default observer(function HomePage(){
@@ -33,7 +34,7 @@ Take me to my solutions!
                              <Button onClick={() => (modalStore.openModal(<LoginForm />, "mini"))} size='huge' inverted>
                             Login!
                         </Button>
-                        <Button  onClick={() => (modalStore.openModal(<h1>Forgot Password</h1>, "large"))} size='huge' inverted>
+                        <Button  onClick={() => (modalStore.openModal(<ForgotPassword/>, "tiny"))} size='huge' inverted>
                                 Forgot Password
                             </Button> 
                             </>

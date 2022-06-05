@@ -7,16 +7,13 @@
 @import url('https://cdn.syncfusion.com/ej2/20.1.52/ej2-base/styles/tailwind.css'); */
 
 /* @import "../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css"; */
+
+
+
+
+
 @import "../../../node_modules/@syncfusion/ej2-react-navigations/styles/tailwind.css";
-
-/* @import "../../../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css";
-
-
-@import "../../../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css"; */
 @import "../../../node_modules/@syncfusion/ej2-react-dropdowns/styles/tailwind.css";
-
-
-
 @import '../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css';  
 @import '../../../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';  
 @import '../../../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';  
@@ -30,6 +27,9 @@
 @import "../../../node_modules/@syncfusion/ej2-react-lists/styles/tailwind.css";
 
 @import "../../../node_modules/@syncfusion/ej2-react-layouts/styles/tailwind.css";
+
+@import "../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css";
+@import "../../../node_modules/@syncfusion/ej2-notifications/styles/tailwind.css";
 
 body{
   background-color: #EAEAEA !important;

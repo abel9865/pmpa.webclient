@@ -34,6 +34,7 @@ import WorkFlowDashboard from '../../features/workFlows/dashboard/WorkFlowDashbo
 import ThemeBuilder from '../../features/theme/ThemeBuilder';
 import ReportBuilder from '../../features/reports/configurator/ReportBuilder';
 import DashboardBuilder from '../../features/dashboard/configurator/DashboardBuilder';
+import ResetPassword from '../../features/login/ResetPassword';
 
 export default observer(function MainLayout(){
 
@@ -63,9 +64,11 @@ export default observer(function MainLayout(){
           <ModalContainer />
     
           <Route exact path='/' component={HomePage} />
-    
+          <Route exact path={'/resetpassword'} component={ResetPassword} />
+
           <Route
             path={'/(.+)'}
+           // path={'^(?=/(.+))(?= /\/(?!resetpassword)/).*$'}
             render={() => (
               <>
     

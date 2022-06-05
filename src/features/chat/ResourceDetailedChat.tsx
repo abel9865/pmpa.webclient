@@ -1,28 +1,28 @@
-import { Formik, Form, Field, FieldProps  } from 'formik';
+import { Formik, Form, Field, FieldProps } from 'formik'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect } from 'react'
-import {Segment, Header, Comment, Button, Loader} from 'semantic-ui-react'
-import MyTextArea from '../../../../app/common/form/MyTextArea';
-import { useStore } from '../../../../app/stores/store';
+import { Link } from 'react-router-dom'
+import { Segment, Header, Comment, Loader, Button } from 'semantic-ui-react'
+
 import * as Yup from 'yup';
 import { formatDistanceToNow } from 'date-fns'
+import { useStore } from '../../app/stores/store'
 
 interface Props {
     resourceId: string;
 }
 
-export default observer(function ClientProjectDetailedChat({resourceId}:Props) {
-   
-    const{commentStore} = useStore();
+export default observer(function ActivityDetailedChat({ resourceId }: Props) {
+    const { commentStore } = useStore();
 
-    useEffect(()=>{
-        if(resourceId){
+    useEffect(() => {
+        if (resourceId) {
             commentStore.createHubConnection(resourceId);
         }
-        return()=>{
+        return () => {
             commentStore.clearComments();
         }
-    },[commentStore, resourceId]);
+    }, [commentStore, resourceId]);
 
     return (
         <>
@@ -31,54 +31,12 @@ export default observer(function ClientProjectDetailedChat({resourceId}:Props) {
                 attached='top'
                 inverted
                 color='teal'
-                style={{border: 'none'}}
+                style={{ border: 'none' }}
             >
                 <Header>Chat about this event</Header>
             </Segment>
             <Segment attached clearing>
-                <Comment.Group>
-                    {commentStore.comments.map(comment=>(
-                        <Comment key={comment.id}>
-                        <Comment.Avatar src={comment.image || '/assets/user.png'}/>
-                        <Comment.Content>
-                            <Comment.Author>{comment.displayName}</Comment.Author>
-                            <Comment.Metadata>
-                                <div>{formatDistanceToNow(new Date(comment.createdDate!))} ago</div>
-                            </Comment.Metadata>
-                            <Comment.Text>{comment.body}</Comment.Text>
-                           
-                        </Comment.Content>
-                    </Comment>
-                    ))}
-                    
-{/* <Formik
-onSubmit={(values, {resetForm})=>
-commentStore.addComment(values).then(()=>resetForm())}
-initialValues={{body:''}}
->
- {({isSubmitting, handleSubmit})=>{ 
-    <Form className='ui form' onSubmit={handleSubmit}>
-  <MyTextArea placeholder='Add comment' name='body' rows={2} />
-                        <Button
-                        loading={isSubmitting}
-                        //disabled={isSubmitting || !isValid}
-                        //disabled={isSubmitting}
-                            content='Add Reply'
-                            labelPosition='left'
-                            icon='edit'
-                            primary
-                            type='submit'
-                            floated='right'
-                        />
-
-                        
-    </Form>
- }} 
-
-</Formik> */}
-
-
-<Formik
+                <Formik
                     onSubmit={(values, { resetForm }) =>
                         commentStore.addComment(values).then(() => resetForm())}
                     initialValues={{ body: '' }}
@@ -109,10 +67,31 @@ initialValues={{body:''}}
                                     </div>
                                 )}
                             </Field>
+                            <Button
+                            content='Add Reply'
+                            labelPosition='left'
+                            icon='edit'
+                            primary
+                            type='submit'
+                        />
                         </Form>
                     )}
                 </Formik>
-                 
+                <Comment.Group>
+                    {commentStore.comments.map(comment => (
+                        <Comment key={comment.id}>
+                            <Comment.Avatar src={comment.image || '/assets/user.png'} />
+                            <Comment.Content>
+                                <Comment.Author >
+                                    {comment.displayName}
+                                </Comment.Author>
+                                <Comment.Metadata>
+                                    <div>{formatDistanceToNow(new Date(comment.createdDate!))} ago</div>
+                                </Comment.Metadata>
+                                <Comment.Text style={{ whiteSpace: 'pre-wrap' }}>{comment.body}</Comment.Text>
+                            </Comment.Content>
+                        </Comment>
+                    ))}
                 </Comment.Group>
             </Segment>
         </>

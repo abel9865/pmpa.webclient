@@ -35,7 +35,7 @@ if(loadingInitial || !clientProject) return <LoadingComponent/>;
 <Grid.Column width={10}>
   <ClientProjectDetailedHeader clientProject={clientProject} />
   <ClientProjectDetailedInfo clientProject={clientProject}/>
-  <ClientProjectDetailedChat />
+  <ClientProjectDetailedChat resourceId='36622530-d111-49e1-a23a-53999752a58d' />
   
 </Grid.Column>
 

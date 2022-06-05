@@ -26,10 +26,10 @@ export interface UserFormValues {
     phoneNumber?:string;
     isAdmin?: boolean;
     active?: boolean;
-    profileImage?: string
-    profilePath?: string
-    sysTimeZone?: string
-    sysTimeOffset?: string
+    imageId?: string
+    imagePath?: string
+    //sysTimeZone?: string
+    //sysTimeOffset?: string
     clientSideChangeBy?: string
     clientId?: string
     userId?:string,
