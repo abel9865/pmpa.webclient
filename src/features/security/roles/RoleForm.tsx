@@ -21,7 +21,7 @@ import { Role } from '../../../app/models/role';
 import MyToggleInput from '../../../app/common/form/MyToggleInput';
 import { values } from 'mobx';
 import moment from 'moment';
-
+import "../../../features/syncFusion.css";
 
 export default observer(function RoleForm() {
 

@@ -1,5 +1,5 @@
 
-@import url('https://cdn.syncfusion.com/ej2/styles/compatibility/tailwind.css');
+@import url('https://cdn.syncfusion.com/ej2/styles/compatibility/bootstrap5.css');
 @import url('https://cdn.boldreports.com/4.1.78/content/bold.widgets.core.compatibility.min.css');
 @import url('https://cdn.boldreports.com/4.1.78/content/material/bold.theme.compatibility.min.css');
 
@@ -9,10 +9,7 @@
 /* @import "../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css"; */
 
 
-
-
-
-@import "../../../node_modules/@syncfusion/ej2-react-navigations/styles/tailwind.css";
+/* @import "../../../node_modules/@syncfusion/ej2-react-navigations/styles/tailwind.css";
 @import "../../../node_modules/@syncfusion/ej2-react-dropdowns/styles/tailwind.css";
 @import '../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css';  
 @import '../../../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';  
@@ -29,7 +26,7 @@
 @import "../../../node_modules/@syncfusion/ej2-react-layouts/styles/tailwind.css";
 
 @import "../../../node_modules/@syncfusion/ej2-base/styles/tailwind.css";
-@import "../../../node_modules/@syncfusion/ej2-notifications/styles/tailwind.css";
+@import "../../../node_modules/@syncfusion/ej2-notifications/styles/tailwind.css"; */
 
 body{
   background-color: #EAEAEA !important;

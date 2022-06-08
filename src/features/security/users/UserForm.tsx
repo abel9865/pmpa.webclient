@@ -16,7 +16,7 @@ import { history } from '../../..';
 import { Role } from '../../../app/models/role';
 import UserHeader from './UserHeader';
 
-
+import "../../../features/syncFusion.css";
 
 
 
@@ -26,13 +26,19 @@ export default observer(function UserForm() {
 
     const history = useHistory();
     const { commonStore, userStore, roleStore } = useStore();
-    const{setSideBarDisplay}= commonStore;
+    const { setSideBarDisplay } = commonStore;
     const { addUser, updateUser, loading, getRegisteredUser, loadingInitial } = userStore;
     const { getRoles } = roleStore;
     const { id } = useParams<{ id: string }>();
     const [addMode, setAddMode] = useState(true);
     const [activeIndex, setActiveIndex] = useState(0);
 
+
+    //Use to keep track of all available roles and selected roles unmodified
+    const [allRolesUnmodified, setRolesUnmodified] = useState<Role[]>();
+    const [selectedRolesUnmodified, setSelectedRolesUnmodified] = useState<Role[]>();
+
+    //Use to keep track of all roles (modified to fit the structure expected by the multi select component)
     const [allRoles, setAllRoles] = useState<{ [key: string]: Object; }[]>();
 
     const [registeredUser, setRegisteredUser] = useState<UserFormValues>({
@@ -49,7 +55,7 @@ export default observer(function UserForm() {
         phoneNumber: '',
 
         imageId: '',
-    imagePath: '',
+        imagePath: '',
         // isAdmin: false,
         // active: true,
         // profileImage: '',
@@ -134,22 +140,21 @@ export default observer(function UserForm() {
 
     useEffect(() => {
 
-// show sidebar nav
-setSideBarDisplay(true);
+        // show sidebar nav
+        setSideBarDisplay(true);
 
 
         if (id) getRegisteredUser(id).then(registeredUser => {
-
 
             setRegisteredUser(registeredUser!);
             setAddMode(false);
         }
         );
 
-//in addMode, no user is selected - so read projectid from localstorage and retrieve all roles for projectId
+        //in addMode, no user is selected - so read projectid from localstorage and retrieve all roles for projectId
         // getRoles(registeredUser ? registeredUser.clientId! : window.localStorage.getItem("cid")!).then(roles => {
 
-            getRoles( window.localStorage.getItem("pjid")!).then(roles => {
+        getRoles(window.localStorage.getItem("pjid")!).then(roles => {
 
 
             let rolesObj: { [key: string]: Object; }[] = roles!.map((role) => {
@@ -159,35 +164,34 @@ setSideBarDisplay(true);
 
             setAllRoles(rolesObj);
 
+            setRolesUnmodified(roles);
+
         })
 
-    }, [id, getRegisteredUser, setAddMode, getRoles, setAllRoles, setSideBarDisplay])
+    }, [id, getRegisteredUser, setAddMode, getRoles, setAllRoles, setRolesUnmodified, setSideBarDisplay])
 
 
 
 
     function getSelectedRoles() {
 
-        let selectedRolesObj: string[] =[]
-        
-        if(registeredUser.roles!==undefined){
-        selectedRolesObj = registeredUser!?.roles!.map((role) => {
-            return role.roleId
+        let selectedRolesObj: string[] = []
 
-        });
-    };
+        if (registeredUser.roles !== undefined) {
+            selectedRolesObj = registeredUser!?.roles!.map((role) => {
+                return role.roleId
+
+            });
+        };
+
         return selectedRolesObj;
     }
 
-   
+
 
     const selectedRoles = getSelectedRoles();
 
-    
 
-    console.log(selectedRoles);
-
-    console.log(allRoles);
 
 
 
@@ -199,15 +203,46 @@ setSideBarDisplay(true);
         setActiveIndex(newIndex!);
     }
 
+
+
     function handleMultiSelectChange(data: any) {
 
-        //console.log(data);
+
+        if(allRolesUnmodified){
+
+
+            var arrayLength = data.value.length;
+
+            const finalResult: Role[] = []
+    
+            for (var i = 0; i < arrayLength; i++) {
+    
+                let role = allRolesUnmodified!.filter(x => x.roleId == data.value[i]);
+                //Do something
+                finalResult.push(role[0]);
+            }
+    
+            setSelectedRolesUnmodified(finalResult);
+    
+            let result = allRolesUnmodified!.filter(role => {
+                return Object.keys(data.value).every(x => role.roleId === data.value[x] as string);
+    
+            });
+
+
+        }
+     
 
     }
 
-    function handleFormSubmit(registeredUser: UserFormValues) {
+    async function handleFormSubmit(registeredUser: UserFormValues) {
 
         try {
+
+            registeredUser.roles = selectedRolesUnmodified;
+console.log('obj to update');
+console.log(registeredUser);
+
             if (registeredUser.userId?.length === 0 || registeredUser.userId === undefined) {
 
                 let newUser = {
@@ -215,7 +250,7 @@ setSideBarDisplay(true);
                     userId: uuid()
                 }
 
-                addUser(newUser).then(() => {
+                await addUser(newUser).then(() => {
                     history.push('security');
 
 
@@ -224,7 +259,7 @@ setSideBarDisplay(true);
             }
             else {
                 alert('updating user');
-                updateUser(registeredUser).then(() => {
+                await updateUser(registeredUser).then(() => {
                     history.push('security');
                 })
             }
@@ -239,6 +274,8 @@ setSideBarDisplay(true);
     }
 
 
+console.log(allRoles);
+console.log(selectedRoles);
 
 
     if (loadingInitial) return <LoadingComponent content='Loading...' />
@@ -247,7 +284,7 @@ setSideBarDisplay(true);
 
 
         <div className='pmpacomp'>
-            <UserHeader firstName={registeredUser.firstName || ''} lastName= {registeredUser.lastName ||''} photoUrl={registeredUser.imagePath||''}></UserHeader>
+            <UserHeader firstName={registeredUser.firstName || ''} lastName={registeredUser.lastName || ''} photoUrl={registeredUser.imagePath || ''}></UserHeader>
             {/* userStore.addUser(values.registeredUser) */}
             <Segment clearing>
 
@@ -267,8 +304,8 @@ setSideBarDisplay(true);
                         country: registeredUser.country || '',
                         phoneNumber: registeredUser.phoneNumber || '',
 
-                        imageId: registeredUser.imageId|| '',
-                        imagePath: registeredUser.imagePath ||'',
+                        imageId: registeredUser.imageId || '',
+                        imagePath: registeredUser.imagePath || '',
 
                         // isAdmin: registeredUser.isAdmin,
                         // active: registeredUser.active,
@@ -290,7 +327,10 @@ setSideBarDisplay(true);
                     //   onSubmit={(values, { setErrors }) => handleFormSubmit(values.formObj).catch(error=>   
                     //    setErrors({error: "An error occured" })      )}
                     onSubmit={(values, { setErrors }) =>
-                        ((id?.length === 0 || id === undefined) ? addUser(values) : updateUser(values))
+                        // ((id?.length === 0 || id === undefined) ? 
+                        // addUser(values) 
+                        // : updateUser(values))
+                        handleFormSubmit(values)
                             .catch(error =>
                                 setErrors({ error: error }))}
                 // onSubmit={values=> handleFormSubmit(values)} 
@@ -382,7 +422,10 @@ setSideBarDisplay(true);
 
                                 <Grid.Row>
                                     <Grid.Column>
-                                        <MultiSelectComponent id="boxelement" dataSource={allRoles!} value={selectedRoles} change={(data: any) => (handleMultiSelectChange(data))} mode="Box" floatLabelType='Always'
+                                        <MultiSelectComponent id="boxelement" dataSource={allRoles!} value={selectedRoles}
+                                            //change={()=>alert('test')}
+                                            change={(data: any) => (handleMultiSelectChange(data))}
+                                            mode="Box" floatLabelType='Always'
                                             fields={{ text: 'roleName', value: 'roleId' }}
                                             style={{ border: '0 px !important' }}
                                             placeholder="Select roles" />

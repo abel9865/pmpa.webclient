@@ -24,7 +24,7 @@ import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { history } from '../../..';
 import DeleteUser from './DeleteUser';
 import modalStore from '../../../app/stores/modalStore';
-
+import "../../../features/syncFusion.css";
 
 
 L10n.load({

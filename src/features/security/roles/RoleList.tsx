@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect } from 'react';
 
 import { L10n, getValue } from '@syncfusion/ej2-base';
 
+import "../../../features/syncFusion.css";
 
 import {
     GridComponent,

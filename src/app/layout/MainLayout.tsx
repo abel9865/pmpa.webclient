@@ -68,7 +68,7 @@ export default observer(function MainLayout(){
 
           <Route
             path={'/(.+)'}
-           // path={'^(?=/(.+))(?= /\/(?!resetpassword)/).*$'}
+           //path={'/(.+) (\/(?!resetpassword))'}
             render={() => (
               <>
     

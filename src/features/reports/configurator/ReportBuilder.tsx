@@ -31,10 +31,16 @@ import ReactDOM from 'react-dom';
 declare let BoldReportDesignerComponent: any;
 
 
+var height= window.innerHeight-52;
 var designerStyle = {
-  'height': '1200px',
+  'height': height+'px',
   'width': '100%'
 };
+
+// var designerStyle = {
+//   'height': '1200px',
+//   'width': '100%'
+// };
 
 interface Props{
   messages:any;

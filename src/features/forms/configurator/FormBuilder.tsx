@@ -12,6 +12,7 @@ import 'grapesjs/dist/css/grapes.min.css';
 
 import './formbuilder.css'
 
+
 // import 'grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css';
 
 // import 'grapesjs/dist/grapes.min.js';
@@ -48,7 +49,7 @@ useEffect(()=>{
         container:"#editor",
         plugins:[gjsPresetWebpage],
         pluginsOpts:{
-            
+            gjsPresetWebpage:{},
         }
     });
     setEditor(editor);
