@@ -8,6 +8,7 @@ import { Role } from '../models/role';
 import { store } from '../stores/store';
 import { Photo } from '../models/photo';
 import { PasswordRequestObj } from '../models/passwordRequestObj';
+import { ReportItem } from '../models/reportItem';
 
 
 const sleep = (delay: number) => {
@@ -121,12 +122,20 @@ const Profiles={
     }
 }
 
+const ReportApi={
+  
+getReportToken: ()=>requests.get<string>('/report/getreporttoken'),
+getReportItems: ()=>requests.get<ReportItem[]>('/role/getreportitems'),
+   
+}
+
 
 const agent = {
     ClientProjects,
     Account,
     RoleApi,
-    Profiles
+    Profiles,
+    ReportApi
 }
 
 export default agent;

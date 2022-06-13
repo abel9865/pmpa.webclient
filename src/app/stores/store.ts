@@ -5,6 +5,7 @@ import CommonStore from "./commonStore";
 import LayoutStore from "./LayoutStore";
 import ModalStore from "./modalStore";
 import ProfileStore from "./profileStore";
+import ReportStore from "./reportStore";
 import RoleStore from "./roleStore";
 import ThemeStore from "./themeStore";
 import UserStore from "./userStore";
@@ -18,7 +19,8 @@ interface Store{
     layoutStore: LayoutStore,
     themeStore: ThemeStore,
     profileStore: ProfileStore,
-    commentStore:CommentStore
+    commentStore:CommentStore,
+    reportStore:ReportStore
 }
 
 export const store:Store={
@@ -30,7 +32,8 @@ export const store:Store={
     layoutStore: new LayoutStore(),
     themeStore: new ThemeStore(),
     profileStore: new ProfileStore(),
-    commentStore : new CommentStore()
+    commentStore : new CommentStore(),
+    reportStore: new ReportStore()
 }
 
 export const StoreContext = createContext(store);

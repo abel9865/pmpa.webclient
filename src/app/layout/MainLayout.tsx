@@ -77,24 +77,15 @@ export default observer(function MainLayout(){
                   <div className="menu-layout">
                     <TopMenu />
                   </div>
-                  <div className="main-content-layout">
-                    <div className='parent-layout' style={{ height: '100vh' }}>
-                      {/* <div className='side-layout' style={{ height: '100vh'}}> */}
-                      {displaySideBar ? (
-                        <div className='side-layout' style={{ height: '100vh' }}>
-                          <SideBar />
-                        </div>
-                      ) :
-                        (
-                          <></>
-                        )
-                      }
-    
-                      {/* </div> */}
-                      <div className={displaySideBar?('content-layout'):('')} >
-    
-    
-                        <Switch>
+                  <div className="main-content-layout" style={{ height: '100vh' }}>
+                    
+
+
+                  {displaySideBar ? (
+                  <div className='parent-layout' style={{ height: '100vh' }}>
+                  <div className='side-layout' style={{ height: '100vh'}}>  <SideBar /></div>
+                  <div className='content-layout' >
+                  <Switch>
                           <Route exact path='/clientProjects' component={ClientProjectDashboard} />
                           <Route path='/clientProjects/:id' component={clientProjectDetails} />
                           <Route key={location.key} path={['/createClientProject', '/manage/:id']} component={ClientProjectForm} />
@@ -127,10 +118,58 @@ export default observer(function MainLayout(){
                           <Route exact path='/dashboardbuilder' component={DashboardBuilder} />
     
                           <Route component={NotFound} />
-                        </Switch>
+                  </Switch>
+</div>
+</div>
+
+                  ):
+                  (
+                  <>
+                   <Switch>
+                          <Route exact path='/clientProjects' component={ClientProjectDashboard} />
+                          <Route path='/clientProjects/:id' component={clientProjectDetails} />
+                          <Route key={location.key} path={['/createClientProject', '/manage/:id']} component={ClientProjectForm} />
+                          <Route path='/errors' component={TestErrors} />
+                          <Route path='/server-error' component={ServerError} />
+                          <Route path='/login' component={LoginForm} />
     
-                      </div>
-                    </div>
+    
+    
+    
+                          <Route exact path='/security' component={Security} />
+                          <Route exact path='/users' component={UserList} />
+                          <Route key={location.key} path={['/addUser', '/manageUser/:id', '/profile/:id']} component={UserForm} />
+    
+                          <Route exact path='/roles' component={RoleList} />
+                          <Route key={location.key} path={['/addRole', '/manageRole/:id']} component={RoleForm} />
+    
+                          <Route  path='/workFlows' component={WorkFlowDashboard} />
+
+                          <Route  path='/connections' component={ConnectionList} />
+                        
+                          <Route  path='/settings' component={settings} />
+
+                          <Route  path='/theme' component={ThemeBuilder} />
+    
+    
+                          <Route exact path='/reportbuilder' component={ReportBuilder} />
+                          <Route exact path='/formbuilder' component={FormBuilder} />
+
+                          <Route exact path='/dashboardbuilder' component={DashboardBuilder} />
+    
+                          <Route component={NotFound} />
+                  </Switch>
+                  </>
+
+                  )
+            }
+
+
+
+
+                   
+
+
                   </div>
                 </div>
     

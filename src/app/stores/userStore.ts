@@ -41,6 +41,11 @@ export default class UserStore {
             window.localStorage.setItem('pid', user.userId);
 
 
+            const rptToken = await agent.ReportApi.getReportToken();
+            //set localStorage for rptToken
+            window.localStorage.setItem('tk1', rptToken);
+            store.commonStore.setReportToken(rptToken);
+
             runInAction(() => this.user = user);
 
             history.push('/clientProjects')
@@ -78,8 +83,9 @@ export default class UserStore {
         store.commonStore.setToken(null);
         window.localStorage.removeItem('jwt');
         window.localStorage.removeItem('cid');
-
+        window.localStorage.removeItem('pjid');
         window.localStorage.removeItem('pid');
+        window.localStorage.removeItem('tk1');
 
     }
 

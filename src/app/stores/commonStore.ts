@@ -4,6 +4,7 @@ import { ServerError } from "../models/serverError";
 export default class CommonStore {
     error: ServerError | null = null;
     token: string | null = window.localStorage.getItem('jwt');
+    reportToken:string|null = window.localStorage.getItem('tk1');
     appLoaded = false;
     showSideBar = false;
 
@@ -31,6 +32,12 @@ export default class CommonStore {
         //not needed because we have a reaction in the constructor
         // if (token) window.localStorage.setItem('jwt', token);
         this.token = token;
+    }
+
+    setReportToken=(rptToken: string | null) => {
+        //not needed because we have a reaction in the constructor
+        // if (token) window.localStorage.setItem('jwt', token);
+        this.reportToken = rptToken;
     }
 
     setAppLoaded = () => {
