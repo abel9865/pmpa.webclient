@@ -1,30 +1,23 @@
 /// <reference path="grapejs.d.ts" />
 
-
+/// <reference path="grapejsblockbasic.d.ts" />
 
 import React, {Fragment, Component, useEffect, useState} from 'react';
 
 import grapesjs from 'grapesjs'
 
-import gjsPresetWebpage from 'grapesjs-preset-webpage';
+// import gjsPresetWebpage from 'grapesjs-preset-webpage';
+
+import gjsBlockBasic from 'grapesjs-blocks-basic';
 
 import 'grapesjs/dist/css/grapes.min.css';
 
 import './formbuilder.css'
 
 
-// import 'grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css';
 
-// import 'grapesjs/dist/grapes.min.js';
-
-// import 'grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.js';
-
-
-import 'grapesjs-preset-webpage';
  
- 
- //declare let GrapesjsReact: any;
- //declare let grapesjs: any;
+
 
 
 export default function FormBuilder (){
@@ -47,7 +40,7 @@ const[editor, setEditor] = useState(null);
 useEffect(()=>{
     const editor = grapesjs.init({
         container:"#editor",
-        plugins:[gjsPresetWebpage],
+        plugins:[gjsBlockBasic],
         pluginsOpts:{
             gjsPresetWebpage:{},
         }

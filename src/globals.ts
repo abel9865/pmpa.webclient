@@ -7,3 +7,5 @@ import ReactDOM from 'react-dom';
 (window as any).createReactClass = createReactClass;
 (window as any).ReactDOM = ReactDOM;
 (window as any).$ = (window as any).jQuery = jquery;
+
+(window as any).bb$.easing = (window as any).$.easing = jQuery.easing

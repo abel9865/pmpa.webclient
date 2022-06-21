@@ -5,6 +5,7 @@ import { useStore } from '../../app/stores/store';
 import ThemeBuilder from '../theme/ThemeBuilder';
 import { AccordionComponent, AccordionItemDirective, AccordionItemsDirective } from '@syncfusion/ej2-react-navigations';
 import PaymentGatewaySettings from '../paymentGateway/PaymentGatewaySettings';
+import "../../features/syncFusion.css";
 
 export default observer(function Settings (){
 

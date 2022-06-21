@@ -19,19 +19,27 @@ export default class ReportStore {
     }
 
 
+    get reportItemsByTitle() {
+        return Array.from(this.reportItemRegistry.values()).sort((a, b) =>
+            //Date.parse(a.projectTitle[0]) - Date.parse(b.projectTitle[0])
+            a.name.localeCompare(b.name)
+        );
+    }
+
+
     getReportItems = async () => {
         this.loadingInitial = true;
         try {
             const reportItems = await agent.ReportApi.getReportItems();
-
+            //console.log(reportItems);
             reportItems.forEach(reportItem => {
                 this.setReportItem(reportItem);
             })
             this.setLoadingInitial(false);
 
-//console.log(Array.from(this.roleRegistry.values()))
-
-return Array.from(this.reportItemRegistry.values());
+//console.log(Array.from(this.reportItemRegistry.values()))
+//console.log(Array.from(this.reportItemRegistry))
+//return Array.from(this.reportItemRegistry.values());
 
 
         } catch (error) {
@@ -45,7 +53,7 @@ return Array.from(this.reportItemRegistry.values());
 
     private setReportItem = (reportItem: ReportItem) => {
        
-        this.reportItemRegistry.set(reportItem.reportId!, reportItem);
+        this.reportItemRegistry.set(reportItem.id!, reportItem);
     }
 
 

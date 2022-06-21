@@ -56,8 +56,8 @@ const validationSchema =   Yup.object({
 <Formik
 validationSchema={validationSchema}
 initialValues={{ password: '', confirmPassword:'', error: null }}
-onSubmit={(values, { setErrors }) => userStore.sendPasswordResetEmail(values).then(e=>setRequestSubmitted(true)).catch(error =>
-    setErrors({ error: 'Invalid email ' }))}
+onSubmit={(values, { setErrors }) => userStore.resetPassword(values).then(e=>setRequestSubmitted(true)).catch(error =>
+    setErrors({ error: error }))}
 >
 {({ handleSubmit, isSubmitting, errors }) => (
 

@@ -9,6 +9,7 @@ import { store } from '../stores/store';
 import { Photo } from '../models/photo';
 import { PasswordRequestObj } from '../models/passwordRequestObj';
 import { ReportItem } from '../models/reportItem';
+import { UserAcctRecoveryDetail } from '../models/userAcctRecoveryDetail';
 
 
 const sleep = (delay: number) => {
@@ -93,7 +94,8 @@ const Account={
     getRegisteredUser:(id:string)=>requests.get<UserFormValues>(`/account/getregistereduser/${id}`),
     current:()=> requests.get<User>('/account'),
     login:(user:UserFormValues)=>requests.post<User>('/account/login', user),
-    ResetPassword:(obj:PasswordRequestObj)=>requests.post<void>('/account/ResetPassword', obj),
+    SendPasswordEmail:(obj:PasswordRequestObj)=>requests.post<void>('/account/SendPasswordEmail', obj),
+    ResetPassword:(obj:UserAcctRecoveryDetail)=>requests.post<void>('/account/ChangePassword', obj),
     addUser:(user:UserFormValues)=>requests.post<User>('/account/adduser', user),
 
     updateUser: (user: UserFormValues) => axios.put<void>(`/account/edituser/${user.userId}`, user),
@@ -125,7 +127,7 @@ const Profiles={
 const ReportApi={
   
 getReportToken: ()=>requests.get<string>('/report/getreporttoken'),
-getReportItems: ()=>requests.get<ReportItem[]>('/role/getreportitems'),
+getReportItems: ()=>requests.get<ReportItem[]>('/report/getreportitems'),
    
 }
 

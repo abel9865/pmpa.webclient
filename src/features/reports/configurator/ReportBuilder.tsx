@@ -123,7 +123,18 @@ export default function ReportBuilder({ messages }: Props) {
     // show sidebar nav
     setSideBarDisplay(true);
 
-  }, [commonStore])
+
+
+    reportStore.getReportItems().then(roles => {
+
+      console.log(Array.from(reportStore.reportItemRegistry.values()));
+
+     console.log(reportStore.reportItemsByTitle);
+
+  });
+
+
+  }, [commonStore, reportStore])
 
   function testFn(args: any, token: string) {
     console.log(args);
@@ -158,6 +169,11 @@ export default function ReportBuilder({ messages }: Props) {
       </Menu> */}
 
 
+{/* {reportStore.reportItemsByTitle.map(rpt  => (
+                 <p>{rpt.name}</p>
+                ))} */}
+
+
   
 
       <div id='rptContainer' style={designerStyle} >
@@ -171,7 +187,7 @@ export default function ReportBuilder({ messages }: Props) {
 
           //serviceUrl = {'https://localhost:5003/ReportingAPI'}
 
-          //filterDataConnectors={['SQL', 'WebAPI', 'Excel', 'MariaDB', 'MySQL']}
+         // filterDataConnectors={['SQL', 'WebAPI', 'Excel', 'MariaDB', 'MySQL']}
 
           //ajaxSuccess={(args: any) => (testFn(args, rptToken))}
 

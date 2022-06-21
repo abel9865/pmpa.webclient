@@ -35,6 +35,7 @@ import ThemeBuilder from '../../features/theme/ThemeBuilder';
 import ReportBuilder from '../../features/reports/configurator/ReportBuilder';
 import DashboardBuilder from '../../features/dashboard/configurator/DashboardBuilder';
 import ResetPassword from '../../features/login/ResetPassword';
+import DashboardListing from '../../features/dashboard/configurator/DashboardListing';
 
 export default observer(function MainLayout(){
 
@@ -115,7 +116,7 @@ export default observer(function MainLayout(){
                           <Route exact path='/reportbuilder' component={ReportBuilder} />
                           <Route exact path='/formbuilder' component={FormBuilder} />
 
-                          <Route exact path='/dashboardbuilder' component={DashboardBuilder} />
+                          <Route exact path='/dashboardbuilder' component={DashboardListing} />
     
                           <Route component={NotFound} />
                   </Switch>
@@ -155,7 +156,7 @@ export default observer(function MainLayout(){
                           <Route exact path='/reportbuilder' component={ReportBuilder} />
                           <Route exact path='/formbuilder' component={FormBuilder} />
 
-                          <Route exact path='/dashboardbuilder' component={DashboardBuilder} />
+                          <Route exact path='/dashboardbuilder' component={DashboardListing} />
     
                           <Route component={NotFound} />
                   </Switch>

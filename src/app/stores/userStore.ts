@@ -6,6 +6,7 @@ import { User, UserFormValues } from "../models/user";
 import { store } from "./store";
 import { v4 as uuid } from 'uuid';
 import { PasswordRequestObj } from "../models/passwordRequestObj";
+import { UserAcctRecoveryDetail } from "../models/userAcctRecoveryDetail";
 
 
 export default class UserStore {
@@ -71,7 +72,18 @@ export default class UserStore {
         try {
             console.log(values);
             var passwordRequestObj: PasswordRequestObj = { email: values.email, url: window.location.href };
-            var opResult = await agent.Account.ResetPassword(passwordRequestObj);
+            var opResult = await agent.Account.SendPasswordEmail(passwordRequestObj);
+            //store.modalStore.closeModal();
+        } catch (error) {
+
+        }
+    }
+
+    resetPassword = async (values: any) => {
+        try {
+            console.log(values);
+            var userAcctRecoveryDetail: UserAcctRecoveryDetail = { recoveryToken: values.email, newPassword: values.password };
+            var opResult = await agent.Account.ResetPassword(userAcctRecoveryDetail);
             //store.modalStore.closeModal();
         } catch (error) {
 
