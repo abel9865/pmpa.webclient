@@ -1,8 +1,11 @@
 /// <reference path="elsa.d.ts" />
 
-import React, { useEffect } from 'react'
-import { Header } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom';
+import { Button, Header, Icon, Tab, TabProps } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
+import WorkFlowList from '../WorkFlowList';
+import WorkFlowInstance from './WorkFlowInstance';
 //import '@elsa-workflows/elsa-workflow-designer'
 //import '@elsa-workflows/elsa-workflow-designer/loader'
 //import '../@elsa-workflows/elsa-workflow-designer'
@@ -19,22 +22,90 @@ import { useStore } from '../../../app/stores/store';
 
 export default function WorkFlowDashboard (){
 
-    const {  commonStore} = useStore();
+    const {  commonStore, clientProjectStore} = useStore();
 
     const{setSideBarDisplay}= commonStore;
+
+    const[activeIndex, setActiveIndex] = useState(1);
+    const location = useLocation<{from: string}>();
+
+
   
-  
+  var url = "https://localhost:15265/instanceviewer?p=" + clientProjectStore.selectedClientProject?.projectId || window.localStorage.getItem("pjid") +"";
+  console.log(url);
+
     useEffect(()=>{
       //display sidebar nav
       setSideBarDisplay(true);
      
-    }, [setSideBarDisplay])
+
+      if(location.state){
+
+        //console.log(location.state.from);
+  
+  
+  switch(location.state.from){
+    case 'instance':
+      setActiveIndex(1);
+      break;
+      case 'list':
+        setActiveIndex(0);
+        break;
+        default:
+  }
+  
+  
+          
+        }
+        else{
+  
+         // console.log('use 1st tab');
+          setActiveIndex(0);
+        }
+
+
+
+
+    }, [setSideBarDisplay, setActiveIndex])
+
+
+
+function getDefaultIndex(){
+  return activeIndex;
+}
+
+  const useIndex = getDefaultIndex();
+
+  function handleTabChange( data:TabProps) {
+  
+setActiveIndex(data.activeIndex! as number);
+
+  } 
+
 
     return(
         <div className='pmpacomp' >
             <Header as='h2' content='WorkFlow Dashboard' />
             
 
+            <Button as={Link} to='addWorkFlow' icon color='blue' labelPosition='left' floated='right'  >
+                <Icon name='add' />
+                New Workflow
+            </Button>
+
+
+            <Tab panes={
+        [
+            { menuItem: 'Workflow List', render: () => <Tab.Pane><WorkFlowList /></Tab.Pane> },
+            { menuItem: 'WorkfLow Instances', render: () => <Tab.Pane>< WorkFlowInstance/></Tab.Pane> },
+          
+          ]
+       }  activeIndex={useIndex} onTabChange={(e, data) => (handleTabChange(data))}  >
+          
+       </Tab>
+
+            {/* <iframe  src={`${url}`}  width={1450} height={800} />; */}
+          
             {/* <wf-designer-host
         id="designerHost2"
         canvas-height="300vh"

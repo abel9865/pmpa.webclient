@@ -35,11 +35,12 @@ import { Button, Container, Icon, Menu } from 'semantic-ui-react';
 
 
 import { useStore } from '../../../app/stores/store';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import { OperationCanceledException } from 'typescript';
 import { RptCreds } from '../../../app/models/rptCreds';
 import { string } from 'yup/lib/locale';
+import { observer } from 'mobx-react-lite';
 declare let BoldReportDesignerComponent: any;
 
 
@@ -51,8 +52,8 @@ declare let BoldReportDesignerComponent: any;
 
 var height = window.innerHeight - 52;
 var designerStyle = {
- 'height': height + 'px',
- //'height':  '750px',
+  'height': height + 'px',
+  //'height':  '750px',
   'width': '100%'
 };
 
@@ -70,8 +71,18 @@ interface Props {
 }
 
 
+// function controlLoaded(args: any) {
+//   var designer = $('#reportdesigner_container').data("boldReportDesigner");
+//   designer.openReport('/Sample Reports/Website Visitor Analysis');
+// }
 
-export default function ReportBuilder({ messages }: Props) {
+export default observer(function ReportBuilder({ messages }: Props) {
+
+  const { id } = useParams<{ id: string }>();
+
+  const { category } = useParams<{ category: string }>();
+
+  const { name } = useParams<{ name: string }>();
 
   const { commonStore, reportStore } = useStore();
 
@@ -79,7 +90,7 @@ export default function ReportBuilder({ messages }: Props) {
 
   const [rptToken, setRptToken] = useState('');
 
-   // const {loading, getReportItems, getToken } = reportStore;
+  // const {loading, getReportItems, getToken } = reportStore;
 
   // const MOUNT_NODE = document.getElementById('reportdesigner_container') as HTMLElement;
 
@@ -117,7 +128,7 @@ export default function ReportBuilder({ messages }: Props) {
   //     console.error(error);
   //   }
   // }
- 
+
 
   useEffect(() => {
     // show sidebar nav
@@ -129,9 +140,9 @@ export default function ReportBuilder({ messages }: Props) {
 
       console.log(Array.from(reportStore.reportItemRegistry.values()));
 
-     console.log(reportStore.reportItemsByTitle);
+      console.log(reportStore.reportItemsByTitle);
 
-  });
+    });
 
 
   }, [commonStore, reportStore])
@@ -145,6 +156,12 @@ export default function ReportBuilder({ messages }: Props) {
   function openRpt(args: any) {
     console.log(args);
     //alert('rpt opened');
+  }
+
+  function controlLoaded(args: any) {
+    //alert(category+'/'+name);
+    var designer = $('#reportdesigner_container').data("boldReportDesigner");
+    designer.openReport('/'+category+'/'+name);
   }
 
   // function getToken(){
@@ -169,36 +186,38 @@ export default function ReportBuilder({ messages }: Props) {
       </Menu> */}
 
 
-{/* {reportStore.reportItemsByTitle.map(rpt  => (
+      {/* {reportStore.reportItemsByTitle.map(rpt  => (
                  <p>{rpt.name}</p>
                 ))} */}
 
 
-  
+
 
       <div id='rptContainer' style={designerStyle} >
 
 
         <BoldReportDesignerComponent
           id="reportdesigner_container"
-
-
+          create={controlLoaded}
+          //reportPath ="Sample Reports/Website Visitor Analysis"
           //serviceUrl={'https://demos.boldreports.com/services/api/ReportDesignerWebApi'}
 
           //serviceUrl = {'https://localhost:5003/ReportingAPI'}
 
-         // filterDataConnectors={['SQL', 'WebAPI', 'Excel', 'MariaDB', 'MySQL']}
+          // filterDataConnectors={['SQL', 'WebAPI', 'Excel', 'MariaDB', 'MySQL']}
 
           //ajaxSuccess={(args: any) => (testFn(args, rptToken))}
 
           //openReportClick={(args: any) => (openRpt(args))}
 
-          serviceAuthorizationToken={'bearer '+ commonStore.reportToken || window.localStorage.getItem("tk1")}
+          serviceAuthorizationToken={'bearer ' + commonStore.reportToken || window.localStorage.getItem("tk1")}
           //{'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiZWw5ODY1QGdtYWlsLmNvbSIsIm5hbWVpZCI6IjEiLCJ1bmlxdWVfbmFtZSI6IjM0MGI4ZTIyLWEyYWYtNGQ5NC1hOGRhLTZjY2ExMWRkYmVjOSIsIklQIjoiMjYwMDoxNzAwOjE0YjA6NWQ1MDo0OWVlOjRkZTQ6OGZkMzpiYjI1IiwiaXNzdWVkX2RhdGUiOiIxNjU0ODIzNjI1IiwibmJmIjoxNjU0ODIzNjI1LCJleHAiOjE2NTU0Mjg0MjUsImlhdCI6MTY1NDgyMzYyNSwiaXNzIjoiaHR0cDovL2Rlc2t0b3AtMW1xNWVxcTo0OTk4Ny9yZXBvcnRpbmcvc2l0ZS9hY21lcnB0IiwiYXVkIjoiaHR0cDovL2Rlc2t0b3AtMW1xNWVxcTo0OTk4Ny9yZXBvcnRpbmcvc2l0ZS9hY21lcnB0In0.pjKqIVpE6fCqDVNCa205TVBCS0EgMH4aY3YrCEYpjCE'}
+
           reportServerUrl={'http://desktop-1mq5eqq:49987/reporting/api/site/acmerpt'}
+
           serviceUrl={'http://desktop-1mq5eqq:49987/reporting/reportservice/api/Designer'}
-          //serviceAuthorizationToken = {`${rptToken}`}
-         
+
+        //serviceAuthorizationToken = {`${rptToken}`}
         // serviceAuthorizationToken={JSON.stringify(rptToken)}
         // serviceAuthorizationToken={`Bearer ${window.localStorage.getItem('jwt')}`}
 
@@ -209,4 +228,4 @@ export default function ReportBuilder({ messages }: Props) {
       </div>
     </div>
   );
-}
+})

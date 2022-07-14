@@ -29,152 +29,202 @@ import { SidebarComponent, SidebarType } from '@syncfusion/ej2-react-navigations
 import SideBarAccordion from './SiceBarAccordion';
 import FormBuilder from "../../features/forms/configurator/FormBuilder";
 import settings from '../../features/settings/settings';
-import ConnectionList from '../../features/connections/ConnectionList';
 import WorkFlowDashboard from '../../features/workFlows/dashboard/WorkFlowDashboard';
 import ThemeBuilder from '../../features/theme/ThemeBuilder';
 import ReportBuilder from '../../features/reports/configurator/ReportBuilder';
 import DashboardBuilder from '../../features/dashboard/configurator/DashboardBuilder';
 import ResetPassword from '../../features/login/ResetPassword';
 import DashboardListing from '../../features/dashboard/configurator/DashboardListing';
+import Connectors from '../../features/connections/Connectors';
+import ReportList from '../../features/reports/configurator/ReportList';
+import DashboardList from '../../features/dashboard/configurator/DashboardList';
+import WorkFlowDesigner from '../../features/workFlows/dashboard/WorkFlowDesigner';
+import WorkFlowList from '../../features/workFlows/WorkFlowList';
+import ConnectorList from '../../features/connections/ConnectorList';
 
-export default observer(function MainLayout(){
+export default observer(function MainLayout() {
 
-    const location = useLocation();
-    const { commonStore, userStore } = useStore();
-    const{setSideBarDisplay, showSideBar:displaySideBar}= commonStore;
-    useEffect(() => {
-      //hide sidebar display
-      setSideBarDisplay(false);
-  
-      if (commonStore.token) {
-        userStore.getUser().finally(() => commonStore.setAppLoaded());
-      }
-      else {
-        commonStore.setAppLoaded();
-      }
-    }, [commonStore, userStore, setSideBarDisplay])
-  
-    if (!commonStore.appLoaded) return <LoadingComponent content="Loadin app..." />
-  
+  const location = useLocation();
+  const { commonStore, userStore } = useStore();
+  const { setSideBarDisplay, showSideBar: displaySideBar } = commonStore;
+  useEffect(() => {
+    //hide sidebar display
+    setSideBarDisplay(false);
 
+    if (commonStore.token) {
+      userStore.getUser().finally(() => commonStore.setAppLoaded());
+    }
+    else {
+      commonStore.setAppLoaded();
+    }
+  }, [commonStore, userStore, setSideBarDisplay])
 
-    return (
-
-        <>
-          <ToastContainer position='bottom-right' hideProgressBar />
-          <ModalContainer />
-    
-          <Route exact path='/' component={HomePage} />
-          <Route exact path={'/resetpassword'} component={ResetPassword} />
-
-          <Route
-            path={'/(.+)'}
-           //path={'/(.+) (\/(?!resetpassword))'}
-            render={() => (
-              <>
-    
-    
-                <div className="grid-layout">
-                  <div className="menu-layout">
-                    <TopMenu />
-                  </div>
-                  <div className="main-content-layout" style={{ height: '100vh' }}>
-                    
+  if (!commonStore.appLoaded) return <LoadingComponent content="Loading app..." />
 
 
-                  {displaySideBar ? (
+
+  return (
+
+    <>
+      <ToastContainer position='bottom-right' hideProgressBar />
+      <ModalContainer />
+
+      <Route exact path='/' component={HomePage} />
+      <Route exact path={'/resetpassword'} component={ResetPassword} />
+
+      <Route
+        path={'/(.+)'}
+        //path={'/(.+) (\/(?!resetpassword))'}
+        render={() => (
+          <>
+
+
+            <div className="grid-layout">
+              <div className="menu-layout">
+                <TopMenu />
+              </div>
+              <div className="main-content-layout" style={{ height: '100vh' }}>
+
+
+
+                {displaySideBar ? (
                   <div className='parent-layout' style={{ height: '100vh' }}>
-                  <div className='side-layout' style={{ height: '100vh'}}>  <SideBar /></div>
-                  <div className='content-layout' >
-                  <Switch>
-                          <Route exact path='/clientProjects' component={ClientProjectDashboard} />
-                          <Route path='/clientProjects/:id' component={clientProjectDetails} />
-                          <Route key={location.key} path={['/createClientProject', '/manage/:id']} component={ClientProjectForm} />
-                          <Route path='/errors' component={TestErrors} />
-                          <Route path='/server-error' component={ServerError} />
-                          <Route path='/login' component={LoginForm} />
-    
-    
-    
-    
-                          <Route exact path='/security' component={Security} />
-                          <Route exact path='/users' component={UserList} />
-                          <Route key={location.key} path={['/addUser', '/manageUser/:id', '/profile/:id']} component={UserForm} />
-    
-                          <Route exact path='/roles' component={RoleList} />
-                          <Route key={location.key} path={['/addRole', '/manageRole/:id']} component={RoleForm} />
-    
-                          <Route  path='/workFlows' component={WorkFlowDashboard} />
+                    <div className='side-layout' style={{ height: '100vh' }}>  <SideBar /></div>
+                    <div className='content-layout' >
+                      <Switch>
+                        <Route exact path='/clientProjects' component={ClientProjectDashboard} />
+                        <Route path='/clientProjects/:id' component={clientProjectDetails} />
+                        <Route exact path='/connections' component={ConnectorList} />
+                        {/* <Route exact path='/addConnector' component={Connectors}/> */}
+                        <Route key={location.key} path={['/addConnector', '/manageConnection/:id']} component={Connectors} />
 
-                          <Route  path='/connections' component={ConnectionList} />
-                        
-                          <Route  path='/settings' component={settings} />
 
-                          <Route  path='/theme' component={ThemeBuilder} />
-    
-    
-                          <Route exact path='/reportbuilder' component={ReportBuilder} />
-                          <Route exact path='/formbuilder' component={FormBuilder} />
+                        <Route key={location.key} path={['/createClientProject', '/manage/:id']} component={ClientProjectForm} />
+                        <Route path='/errors' component={TestErrors} />
+                        <Route path='/server-error' component={ServerError} />
+                        <Route path='/login' component={LoginForm} />
 
-                          <Route exact path='/dashboardbuilder' component={DashboardListing} />
-    
-                          <Route component={NotFound} />
-                  </Switch>
-</div>
-</div>
 
-                  ):
+
+
+                        <Route exact path='/security' component={Security} />
+                        <Route exact path='/users' component={UserList} />
+                        <Route key={location.key} path={['/addUser', '/manageUser/:id', '/profile/:id']} component={UserForm} />
+
+                        <Route exact path='/roles' component={RoleList} />
+                        <Route key={location.key} path={['/addRole', '/manageRole/:id']} component={RoleForm} />
+
+                        <Route path='/workFlows' component={WorkFlowDashboard} />
+
+                        {/* <Route path='/workFlows' component={WorkFlowList} /> */}
+
+                        {/* <Route  path='/connections' component={ConnectionList} /> */}
+
+                        {/* <Route path='/connections' component={Connectors} /> */}
+
+                        {/* <Route path='/connections' component={ConnectionList} />  */}
+
+
+                        <Route path='/settings' component={settings} />
+
+                        <Route path='/theme' component={ThemeBuilder} />
+
+
+                        <Route path='/addWorkFlow' component={WorkFlowDesigner} />
+
+
+                        <Route path='/reports' component={ReportList} />
+
+<Route key={location.key} path={['/addReport', '/manageReport/:category/:name']} component={ReportBuilder} />
+
+
+                        {/* <Route exact path='/reportbuilder' component={ReportBuilder} /> */}
+                        <Route exact path='/formbuilder' component={FormBuilder} />
+
+                        {/* <Route exact path='/dashboardbuilder' component={DashboardListing} /> */}
+
+
+                        <Route path='/dashboards' component={DashboardList} />
+
+<Route key={location.key} path={['/addDashboard', '/manageDashboard/:id']} component={DashboardBuilder} />
+
+
+
+                        <Route component={NotFound} />
+                      </Switch>
+                    </div>
+                  </div>
+
+                ) :
                   (
-                  <>
-                   <Switch>
-                          <Route exact path='/clientProjects' component={ClientProjectDashboard} />
-                          <Route path='/clientProjects/:id' component={clientProjectDetails} />
-                          <Route key={location.key} path={['/createClientProject', '/manage/:id']} component={ClientProjectForm} />
-                          <Route path='/errors' component={TestErrors} />
-                          <Route path='/server-error' component={ServerError} />
-                          <Route path='/login' component={LoginForm} />
-    
-    
-    
-    
-                          <Route exact path='/security' component={Security} />
-                          <Route exact path='/users' component={UserList} />
-                          <Route key={location.key} path={['/addUser', '/manageUser/:id', '/profile/:id']} component={UserForm} />
-    
-                          <Route exact path='/roles' component={RoleList} />
-                          <Route key={location.key} path={['/addRole', '/manageRole/:id']} component={RoleForm} />
-    
-                          <Route  path='/workFlows' component={WorkFlowDashboard} />
+                    <>
+                      <Switch>
+                        <Route exact path='/clientProjects' component={ClientProjectDashboard} />
 
-                          <Route  path='/connections' component={ConnectionList} />
-                        
-                          <Route  path='/settings' component={settings} />
+                        <Route exact path='/connections' component={ConnectorList} />
 
-                          <Route  path='/theme' component={ThemeBuilder} />
-    
-    
-                          <Route exact path='/reportbuilder' component={ReportBuilder} />
-                          <Route exact path='/formbuilder' component={FormBuilder} />
+{/* <Route exact path='/addConnector' component={Connectors}/> */}
+<Route key={location.key} path={['/addConnector', '/manageConnection/:id']} component={Connectors} />
 
-                          <Route exact path='/dashboardbuilder' component={DashboardListing} />
-    
-                          <Route component={NotFound} />
-                  </Switch>
-                  </>
+
+                        <Route path='/clientProjects/:id' component={clientProjectDetails} />
+                        <Route key={location.key} path={['/createClientProject', '/manage/:id']} component={ClientProjectForm} />
+                        <Route path='/errors' component={TestErrors} />
+                        <Route path='/server-error' component={ServerError} />
+                        <Route path='/login' component={LoginForm} />
+
+
+
+
+                        <Route exact path='/security' component={Security} />
+                        <Route exact path='/users' component={UserList} />
+                        <Route key={location.key} path={['/addUser', '/manageUser/:id', '/profile/:id']} component={UserForm} />
+
+                        <Route exact path='/roles' component={RoleList} />
+                        <Route key={location.key} path={['/addRole', '/manageRole/:id']} component={RoleForm} />
+
+                        {/* <Route path='/workFlows' component={WorkFlowList} /> */}
+
+                        <Route path='/workFlows' component={WorkFlowDashboard} />
+
+                        {/* <Route  path='/connections' component={ConnectionList} /> */}
+
+                        {/* <Route path='/connections' component={Connectors} /> */}
+
+                        {/* <Route path='/connections' component={ConnectionList} />  */}
+
+                        <Route path='/settings' component={settings} />
+
+                        <Route path='/theme' component={ThemeBuilder} />
+
+                     
+                        <Route path='/addWorkFlow' component={WorkFlowDesigner} />
+
+                        <Route path='/reports' component={ReportList} />
+
+                        <Route key={location.key} path={['/addReport', '/manageReport/:category/:name']} component={ReportBuilder} />
+
+                        {/* <Route exact path='/reportbuilder' component={ReportBuilder} /> */}
+                        <Route exact path='/formbuilder' component={FormBuilder} />
+
+                        {/* <Route exact path='/dashboardbuilder' component={DashboardListing} /> */}
+
+                        <Route path='/dashboards' component={DashboardList} />
+
+<Route key={location.key} path={['/addDashboard', '/manageDashboard/:id']} component={DashboardBuilder} />
+
+                        <Route component={NotFound} />
+                      </Switch>
+                    </>
 
                   )
-            }
+                }
 
 
+              </div>
+            </div>
 
-
-                   
-
-
-                  </div>
-                </div>
-    
-                </>
+          </>
         )}
       />
     </>

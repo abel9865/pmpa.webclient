@@ -32,7 +32,7 @@ export default function DashboardListing () {
 
     const[toke, setToke]= useState('');
     const[items, setItems] = useState<any[]>([]);
-    const { commonStore, reportStore } = useStore();
+    const { commonStore, dashboardStore } = useStore();
 
   function renderDashboard(data:any): void {
     dashboard= BoldBI.create({
@@ -71,6 +71,16 @@ export default function DashboardListing () {
 
 
   useEffect(() => {
+
+
+    dashboardStore.getDashboardItems().then(data => {
+
+      console.log(Array.from(dashboardStore.dashboardItemRegistry.values()));
+
+     console.log(dashboardStore.dashboardItemsByTitle);
+
+  });
+
     // var dashboard = undefined;
     // //var querystring = require('querystring');
     // var token = "";
@@ -116,30 +126,30 @@ export default function DashboardListing () {
     // });
 
 
-    const script1 = document.createElement('script');
-  script1.src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js";
-  script1.async = true;
-  document.body.appendChild(script1);
+  //   const script1 = document.createElement('script');
+  // script1.src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js";
+  // script1.async = true;
+  // document.body.appendChild(script1);
 
-  const script2 = document.createElement('script');
-  script2.src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js";
-  script2.async = true;
-  document.body.appendChild(script2);
+  // const script2 = document.createElement('script');
+  // script2.src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js";
+  // script2.async = true;
+  // document.body.appendChild(script2);
 
-  const script3 = document.createElement('script');
-  script3.src = "https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.0-beta/jsrender.min.js";
-  script3.async = true;
-  document.body.appendChild(script3);
+  // const script3 = document.createElement('script');
+  // script3.src = "https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.0-beta/jsrender.min.js";
+  // script3.async = true;
+  // document.body.appendChild(script3);
 
-  const script4 = document.createElement('script');
-  script4.src = "https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.1.0.min.js";
-  script4.async = true;
-  document.body.appendChild(script4);
+  // const script4 = document.createElement('script');
+  // script4.src = "https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.1.0.min.js";
+  // script4.async = true;
+  // document.body.appendChild(script4);
 
-  const script5 = document.createElement('script');
-  script5.src = "https://cdn.boldbi.com/embedded-sdk/v5.1.55/embed-js.js";
-  script5.async = true;
-  document.body.appendChild(script5);
+  // const script5 = document.createElement('script');
+  // script5.src = "https://cdn.boldbi.com/embedded-sdk/v5.1.55/embed-js.js";
+  // script5.async = true;
+  // document.body.appendChild(script5);
 
 // return () => {
 //     document.body.removeChild(script1);

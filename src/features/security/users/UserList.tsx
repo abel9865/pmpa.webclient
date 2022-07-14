@@ -170,7 +170,6 @@ console.log(Array.from(registeredUserRegistry.values()));
   
  
 
-
    
                     <GridComponent style={{marginTop:'20px'}}
                     dataSource={Array.from(registeredUserRegistry.values())} 

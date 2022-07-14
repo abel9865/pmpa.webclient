@@ -257,5 +257,9 @@ body.fluent.e-bigger #edit_target .e-btn.e-primary,  body.fluent-dark.e-bigger #
     width: 100%;
   } */
 
+  .bbi-dbrd-designer-widget-name {
+    height:45px !important;
+  }
+
   @import url('http://desktop-1mq5eqq:49987/bi/webdesignerservice/themes/ej.dashboarddesigner.min.css');
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,700')

@@ -10,6 +10,8 @@ import { Photo } from '../models/photo';
 import { PasswordRequestObj } from '../models/passwordRequestObj';
 import { ReportItem } from '../models/reportItem';
 import { UserAcctRecoveryDetail } from '../models/userAcctRecoveryDetail';
+import { DashboardItem } from '../models/dashboardItem';
+import { WorkFlowItem, WorkFlowItems } from '../models/workFlowItem';
 
 
 const sleep = (delay: number) => {
@@ -128,16 +130,38 @@ const ReportApi={
   
 getReportToken: ()=>requests.get<string>('/report/getreporttoken'),
 getReportItems: ()=>requests.get<ReportItem[]>('/report/getreportitems'),
-   
+deleteReport: (id:string)=>requests.post<void>(`/report/deleteReport/${id}`, id) 
+
 }
 
+
+const DashboardApi={
+  
+    getDashboardToken: ()=>requests.get<string>('/dashboard/getDashboardToken'),
+    getDashboardItems: ()=>requests.get<DashboardItem[]>('/dashboard/getDashboardItems'),
+    deleteDashboard: (id:string)=>requests.post<void>(`/dashboard/deleteDashboard/${id}`, id) 
+       
+    }
+
+    const WorkFlowApi={
+        getWorkFlows:(id:string)=>requests.get<WorkFlowItem[]>(`/workflow/getWorkFlows/${id}`),
+        deleteWorkFlow: (id:string)=>requests.post<void>(`/workflow/deleteWorkFlow/${id}`, id) 
+    }
+
+    const DataSourceApi={
+        getDataSources:()=>requests.get<DashboardItem[]>(`/DataSource/getDataSourceItems`),
+        deleteDataSource: (id:string)=>requests.post<void>(`/DataSource/deleteDataSource/${id}`, id) 
+    }
 
 const agent = {
     ClientProjects,
     Account,
     RoleApi,
     Profiles,
-    ReportApi
+    ReportApi,
+    DashboardApi,
+    WorkFlowApi,
+    DataSourceApi
 }
 
 export default agent;

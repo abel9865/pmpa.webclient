@@ -2,12 +2,13 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { store } from "./store";
 import { ReportItem } from "../models/reportItem";
+import { DashboardItem } from "../models/dashboardItem";
 import { history } from "../..";
 
-export default class ReportStore {
-    reportItem: ReportItem | null = null;
+export default class DataSourceStore {
+    dashboardItem: DashboardItem | null = null;
 
-    reportItemRegistry = new Map<string, ReportItem>();
+    dashboardItemRegistry = new Map<string, DashboardItem>();
     token=''
     loading = false;
     loadingInitial = false;
@@ -19,21 +20,21 @@ export default class ReportStore {
     }
 
 
-    get reportItemsByTitle() {
-        return Array.from(this.reportItemRegistry.values()).sort((a, b) =>
+    get dashboardItemsByTitle() {
+        return Array.from(this.dashboardItemRegistry.values()).sort((a, b) =>
             //Date.parse(a.projectTitle[0]) - Date.parse(b.projectTitle[0])
             a.name.localeCompare(b.name)
         );
     }
 
 
-    getReportItems = async () => {
+    getDataSourceItems = async () => {
         this.loadingInitial = true;
         try {
-            const reportItems = await agent.ReportApi.getReportItems();
+            const dashboardItems = await agent.DataSourceApi.getDataSources();
             //console.log(reportItems);
-            reportItems.forEach(reportItem => {
-                this.setReportItem(reportItem);
+            dashboardItems.forEach(dashboardItem => {
+                this.setDashboardItem(dashboardItem);
             })
             this.setLoadingInitial(false);
 
@@ -51,22 +52,22 @@ export default class ReportStore {
     }
 
 
-    private setReportItem = (reportItem: ReportItem) => {
+    private setDashboardItem = (dashboardItem: DashboardItem) => {
        
-        this.reportItemRegistry.set(reportItem.id!, reportItem);
+        this.dashboardItemRegistry.set(dashboardItem.id!, dashboardItem);
     }
 
 
 
-    deleteReport = async (id: string) => {
+    deleteDataSource = async (id: string) => {
         this.loading = true;
         try {
-            await agent.ReportApi.deleteReport(id);
+            await agent.DataSourceApi.deleteDataSource(id);
             runInAction(() => {
                 // this.clientProjects = [...this.clientProjects.filter(x=>x.projectId!==id)];
-                this.reportItemRegistry.delete(id);
+                this.dashboardItemRegistry.delete(id);
                 this.loading = false;
-                history.push('/reports')
+                history.push('/dashboards')
                 store.modalStore.closeModal();
 
             })
@@ -79,14 +80,12 @@ export default class ReportStore {
     }
 
 
-
-
     getToken = async () => {
        
        let tkn = '';
             this.loadingInitial = true;
             try {
-                 tkn = await agent.ReportApi.getReportToken();
+                 tkn = await agent.DashboardApi.getDashboardToken();
                
                 runInAction(() => {
                     this.token = tkn;

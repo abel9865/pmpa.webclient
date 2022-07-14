@@ -1,14 +1,14 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { store } from "./store";
-import { ReportItem } from "../models/reportItem";
 import { history } from "../..";
+import { WorkFlowItem } from "../models/workFlowItem";
 
-export default class ReportStore {
-    reportItem: ReportItem | null = null;
+export default class WorkFlowStore {
+    workFlowItem: WorkFlowItem | null = null;
 
-    reportItemRegistry = new Map<string, ReportItem>();
-    token=''
+    workFlowItemRegistry = new Map<string, WorkFlowItem>();
+    
     loading = false;
     loadingInitial = false;
 
@@ -19,21 +19,21 @@ export default class ReportStore {
     }
 
 
-    get reportItemsByTitle() {
-        return Array.from(this.reportItemRegistry.values()).sort((a, b) =>
+    get workFlowItemsByTitle() {
+        return Array.from(this.workFlowItemRegistry.values()).sort((a, b) =>
             //Date.parse(a.projectTitle[0]) - Date.parse(b.projectTitle[0])
             a.name.localeCompare(b.name)
         );
     }
 
 
-    getReportItems = async () => {
+    getWorkFlowItems = async (id: string) => {
         this.loadingInitial = true;
         try {
-            const reportItems = await agent.ReportApi.getReportItems();
+            const workFlowItems = await agent.WorkFlowApi.getWorkFlows(id);
             //console.log(reportItems);
-            reportItems.forEach(reportItem => {
-                this.setReportItem(reportItem);
+            workFlowItems.forEach(workFlowItem => {
+                this.setWorkFlowItem(workFlowItem);
             })
             this.setLoadingInitial(false);
 
@@ -51,22 +51,23 @@ export default class ReportStore {
     }
 
 
-    private setReportItem = (reportItem: ReportItem) => {
+    private setWorkFlowItem = (workFlowItem: WorkFlowItem) => {
        
-        this.reportItemRegistry.set(reportItem.id!, reportItem);
+        this.workFlowItemRegistry.set(workFlowItem.id!, workFlowItem);
     }
 
 
 
-    deleteReport = async (id: string) => {
+    deleteWorkFlow = async (id: string) => {
         this.loading = true;
         try {
-            await agent.ReportApi.deleteReport(id);
+            
+            await agent.WorkFlowApi.deleteWorkFlow(id);
             runInAction(() => {
                 // this.clientProjects = [...this.clientProjects.filter(x=>x.projectId!==id)];
-                this.reportItemRegistry.delete(id);
+                this.workFlowItemRegistry.delete(id);
                 this.loading = false;
-                history.push('/reports')
+                history.push('/workflows')
                 store.modalStore.closeModal();
 
             })
@@ -78,31 +79,6 @@ export default class ReportStore {
         }
     }
 
-
-
-
-    getToken = async () => {
-       
-       let tkn = '';
-            this.loadingInitial = true;
-            try {
-                 tkn = await agent.ReportApi.getReportToken();
-               
-                runInAction(() => {
-                    this.token = tkn;
-                })
-
-                this.setLoadingInitial(false);
-
-               
-
-                return tkn;
-            } catch (error) {
-                console.log(error);
-                this.setLoadingInitial(false);
-            }
-        
-    }
 
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;

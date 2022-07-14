@@ -20,12 +20,12 @@ export default observer(function ResourceHeader({headerText, resourceId, resourc
 const{modalStore} = useStore();
     return(
         // <Header as='h2'>
-        <h1>
+        <h2>
       {headerText}
        
        
        <span className="e-badge e-badge-danger e-badge-pill" onClick={() => (modalStore.openModal(<ClientProjectDetailedChat resourceId='7b9e2a98-3114-478f-8ce8-769708543068'/>, "large"))} >99+</span>
-       </h1>
+       </h2>
     //   </Header>
     );
 })

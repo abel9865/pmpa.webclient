@@ -108,7 +108,7 @@ export default function SideBar() {
 
           <Menu.Item
             name='reportbuilder'
-            as= {NavLink} to='/reportbuilder' 
+            as= {NavLink} to='/reports' 
           >
             Report Builder
           </Menu.Item>
@@ -116,7 +116,7 @@ export default function SideBar() {
 
           <Menu.Item
             name='dashboardbuilder'
-            as= {NavLink} to='/dashboardbuilder' 
+            as= {NavLink} to='/dashboards' 
           >
             Dashboard Builder
           </Menu.Item>
