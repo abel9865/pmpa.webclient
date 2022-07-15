@@ -58,15 +58,15 @@ export default observer(function Settings (){
             <Header as='h2' content='Settings' />
 
 
-            <AccordionComponent expandMode='Multiple'>
+            {/* <AccordionComponent expandMode='Multiple'>
         <AccordionItemsDirective>
-          {/* <AccordionItemDirective expanded={true} header='XYZ' content={content0} /> */}
+         
           <AccordionItemDirective expanded={true} header='Payment Gateway' content={content1} />
           <AccordionItemDirective header='Theme Builder' content={content2} />
         </AccordionItemsDirective>
-    </AccordionComponent>
+    </AccordionComponent> */}
 
-{/* 
+
             <Accordion  fluid styled>
         <Accordion.Title
           active={activeIndex === 0}
@@ -77,11 +77,7 @@ export default observer(function Settings (){
           Payment Gateway 
         </Accordion.Title>
         <Accordion.Content active={activeIndex === 0}>
-          <p>
-            A dog is a type of domesticated animal. Known for its loyalty and
-            faithfulness, it can be found as a welcome guest in many households
-            across the world.
-          </p>
+        <PaymentGatewaySettings/>
         </Accordion.Content>
 
         <Accordion.Title
@@ -98,7 +94,7 @@ export default observer(function Settings (){
 
       </Accordion>
 
-       */}
+      
             </div>
     )
 })

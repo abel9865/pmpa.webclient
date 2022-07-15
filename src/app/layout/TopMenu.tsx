@@ -25,7 +25,7 @@ export default observer(function TopMenu(){
 
           
        
-           <Menu.Item as= {NavLink} to='/errors' name='Err'/> 
+           {/* <Menu.Item as= {NavLink} to='/errors' name='Err'/>  */}
 
            <Menu.Item as= {NavLink} to='/settings' name='settings'/> 
        
